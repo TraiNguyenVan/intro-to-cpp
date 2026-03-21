@@ -1,0 +1,31 @@
+# Build outputs
+*.o
+*.obj
+*.out
+*.exe
+*.a
+*.so
+*.dylib
+*.dll
+*.lib
+*.so.*
+
+# Compiled executables (common names without extensions)
+/build/
+/bin/
+/out/
+/dist/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CMake files (if used)
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile

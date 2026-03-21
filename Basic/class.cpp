@@ -4,6 +4,7 @@ using namespace std;
 
 class Vector {
 public:
+    // Constructor
     Vector(int s) : elem{new double[s]}, sz{s} {};
     double& operator[](int i) { return elem[i]; }
     int size() { return sz; }
