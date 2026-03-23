@@ -1,6 +1,5 @@
 #include <cmath>
 using namespace std;
-double sqrt(double x);  // function's interface is declared here
 
 class Vector {
 public:
@@ -12,7 +11,7 @@ private:
     double* elem;
     int sz;
 };
-// Modularity
+// Modularity, class's member can be defined out side of class definition
 Vector::Vector(int s) : elem{new double[s]}, sz{s} {};
 double& Vector::operator[](int i) { return elem[i]; }
 int Vector::size() { return sz; };
