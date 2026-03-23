@@ -2,6 +2,7 @@
 // Using #include "header_file" to access interface
 #include <cmath>
 #include <iostream>
+#include <new>
 #include <stdexcept>
 
 #include "./Vector.h"  //get the interface
@@ -21,7 +22,13 @@ void f(Vector& v) {
     } catch (const out_of_range& e) {
         cerr << "Error: " << e.what() << "\n";
         // Re-throw or handle gracefully
-        throw;
+    }
+    try {  // invariants
+        Vector(-27);
+    } catch (const length_error& e) {
+        cerr << "Error: " << e.what() << "\n";
+    } catch (const bad_alloc& e) {
+        cerr << "Error: " << e.what() << "\n";
     }
 }
 

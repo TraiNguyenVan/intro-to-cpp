@@ -5,7 +5,13 @@
 #include <stdexcept>
 
 // Constructor
-Vector::Vector(int s) : elem{new double[s]}, sz{s} {}
+Vector::Vector(int s) : elem{new double[s]}, sz{s} {
+    if (s < 0) throw std::length_error("Vector size can not be negative");  // invariants
+}
+// Vector::Vector(int s) {
+//     if (s < 0) throw std::length_error("Vector size can not be negative");
+//     {};
+// }
 
 // Destructor - fixes memory leak
 Vector::~Vector() { delete[] elem; }
@@ -16,16 +22,16 @@ Vector::Vector(const Vector& other) : elem{new double[other.sz]}, sz{other.sz} {
 }
 
 // Copy assignment
-Vector& Vector::operator=(const Vector& other) {
-    if (this != &other) {
-        double* new_elem = new double[other.sz];
-        std::copy(other.elem, other.elem + other.sz, new_elem);
-        delete[] elem;
-        elem = new_elem;
-        sz = other.sz;
-    }
-    return *this;
-}
+// Vector& Vector::operator=(const Vector& other) {
+//     if (this != &other) {
+//         double* new_elem = new double[other.sz];
+//         std::copy(other.elem, other.elem + other.sz, new_elem);
+//         delete[] elem;
+//         elem = new_elem;
+//         sz = other.sz;
+//     }
+//     return *this;
+// }
 
 // Move constructor
 Vector::Vector(Vector&& other) noexcept : elem{other.elem}, sz{other.sz} {
