@@ -77,7 +77,7 @@ Large projects separate declarations into header files (`.h` or `.hpp`) and defi
 Separate compilation compiles each `.cpp` file independently into object files (`.o`). The linker combines objects and resolves external references, enabling faster recompilation, modularity, and team collaboration—only modified files need recompilation.
 
 - [Interface and implementation](./Basic/function.cpp)
-- Header files (`.h`) and source files (`.cpp`)
+- [Header files (`.h`)](./Basic/Vector.h) and [source files (`.cpp`)](./Basic/Vector.cpp)
 - Separate compilation
 
 ### Error Handling
@@ -87,7 +87,7 @@ Invariants are conditions that must always hold true at specific program points 
 
 `static_assert` performs compile-time assertions: `static_assert(condition, "message")`. It catches errors early—size requirements, type traits, or constant expressions—instead of at runtime.
 
-- Exceptions (`try`, `catch`, `throw`)
+- Exceptions ([`try`](./Basic/user.cpp#L18-L26), `catch`, [`throw`](./Basic/Vector.cpp))
 - Invariants
 - Static assertions (`static_assert`)
 
