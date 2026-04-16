@@ -99,25 +99,53 @@ Invariants are conditions that must always hold true at specific program points 
 
 ## 03. C++ OO - Classes and Objects
 ### Introduction to Classes
+A **class** is a user-defined type that encapsulates data (member variables) and operations (member functions). Classes are the foundation of object-oriented programming in C++, enabling data abstraction and encapsulation.
+
+**Class vs. Struct**: Both can have members, methods, and access specifiers. The key difference: `class` defaults to `private` access; `struct` defaults to `public`. Use `struct` for simple data aggregates (POD), `class` when you need encapsulation and invariants.
+
+**Concrete vs. Abstract classes**: Concrete classes can be instantiated directly. Abstract classes contain at least one pure virtual function (`= 0`) and serve as interfaces or base classes—they cannot be instantiated.
+
 - Concepts and terminology
-- Class vs. Struct
+- [Class vs. `struct`](./Basic/class.cpp) (see lines 5-15)
 - Concrete vs. Abstract classes
 
 ### Defining Classes and Objects
+A **class declaration** defines the type's interface: member variables and function prototypes. **Object instantiation** creates actual instances of the class in memory. Access members on stack objects with `.` (dot operator) and on pointers/heap objects with `->` (arrow operator).
+
+The class body starts with `class Name {` and ends with `};`. Inside, specify access specifiers (`public:`, `private:`, `protected:`) followed by members. Objects are instantiated like variables: `ClassName object;` or `ClassName* ptr = new ClassName();`.
+
 - Class declaration syntax
 - Object instantiation
 - Accessing members using `.` (dot) and `->` (arrow) operators
 
 ### Member Functions
+**Member functions** operate on class instances and can access private members. **Inline functions** are defined within the class body—compilers may expand them in-place for performance. Functions defined outside use the **scope resolution operator `::`** to associate them with the class: `ReturnType ClassName::functionName() { ... }`.
+
+Define simple getters/setters inline; move complex logic outside the class to keep headers clean and reduce compilation dependencies.
+
 - Inline member functions
-- Defining member functions outside the class using scope resolution operator `::`
+- Defining member functions outside the class using scope resolution operator `::` - [example](./Basic/function.cpp) (see lines 15-18)
 
 ### Access Control
+**Access specifiers** enforce encapsulation—the principle of hiding implementation details. `public` members form the class interface accessible from anywhere. `private` members are internal implementation details, only accessible within the class. `protected` members are accessible within the class and by derived classes (covered in inheritance).
+
+Encapsulation allows changing internal implementation without breaking client code.
+
 - `public` interface
 - `private` implementation
 - `protected` (detailed in inheritance)
 
 ### Core Concepts
+**`this` pointer**: An implicit pointer to the current object instance. Use it when parameter names shadow member variables: `this->member = param;`. It is passed automatically to all non-static member functions.
+
+**`static` members**: Belong to the class, not individual objects. Static data is shared across all instances; static functions can be called without an object (`ClassName::function()`). Use for counters, shared configuration, or utility functions.
+
+**`const` member functions**: Functions that don't modify the object's state. Declare with `void func() const;`. Required when calling methods on const objects. Enables const-correctness—guarantees read-only access.
+
+**`mutable`**: Allows specific members to be modified even in `const` objects. Use for internal state like cache or reference counts that don't affect logical constness.
+
+**`friend`**: Grants non-member functions or other classes access to private/protected members. Use sparingly—it breaks encapsulation but is necessary for some operator overloading and tightly coupled classes.
+
 - `this` pointer: Implicit and explicit usage
 - `static` members: Shared data and utility functions
 - `const` member functions: Ensuring state immutability
