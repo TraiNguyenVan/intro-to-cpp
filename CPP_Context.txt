@@ -1,0 +1,4081 @@
+Để cung cấp Context "sạch" và tối ưu lượng token nhất cho các LLM khác (như ChatGPT, Claude, Claude 3.5, Gemini, v.v.) mà **không làm mất bất kỳ dòng code, định nghĩa hay ví dụ nào**, tôi đã xử lý toàn bộ dữ liệu bạn cung cấp. 
+
+Các thao tác xử lý bao gồm:
+1. Gộp toàn bộ 5 file PDF thành một luồng văn bản duy nhất.
+2. Loại bỏ toàn bộ các thẻ metadata không mang giá trị ngữ nghĩa (VD: `==Start of OCR...==`, `File input_file...`).
+3. Loại bỏ các số trang đứng trơ trọi để tránh gây nhiễu context.
+4. Giữ nguyên 100% cấu trúc code, các ký tự đặc biệt, định nghĩa và dấu câu.
+
+Bạn chỉ cần nhấn nút **Copy** ở góc trên cùng bên phải của khối văn bản dưới đây, lưu vào một file `.txt` (ví dụ: `CPP_Context.txt`) và tải lên cho LLM khác đọc.
+
+```text
+INT1339
+Ngôn ngữ Lập trình C++
+Cơ Sở
+Giảng viên: Lê Hà Thanh
+lehathanh@ptithcm.edu.vn
+
+Nội dung
+1. Giới thiệu
+2. C++ thiết lập môi trường
+3. C++ cú pháp cơ sở
+4. C++ các kiểu dữ liệu
+5. Phạm vi truy cập biến trong C++
+6. C++ hằng số
+7. Các toán tử trong C++
+8. C++ loops - Vòng lặp
+9. C++ functions - hàm
+10. C++ arrays - mảng
+11. C++ strings - chuỗi
+12. C++ pointers - con trỏ
+13. C++ references - tham chiếu
+14. C++ các phép xuất nhập cơ sở
+15. C++ structure – Kiểu Cấu trúc
+16. C++ Class – Kiểu lớp
+17. Xử lý lỗi trong C++
+
+Giới thiệu
+• C++ là ngôn ngữ lập trình trên nhiều nền tảng phổ biến nhất 
+• Được dùng để tạo các ứng dụng và phần mềm hiệu suất cao như HĐH, Trò chơi, phần mềm thương mại điện tử, v.v. 
+• Được phát triển bởi Bjarne Stroustrup, như một phần mở rộng của ngôn ngữ C. 
+• C++ kiểm soát rất tốt tài nguyên hệ thống và bộ nhớ.
+• C, C++, Java, C# có cấu trúc cú pháp (syntax) tương tự
+
+Giới thiệu
+• C++ là ngôn ngữ biên dịch (compile)
+• Để một chương trình có thể chạy, văn bản nguồn của nó phải được xử lý bằng trình biên dịch, tạo ra các tệp đối tượng, được kết hợp bởi một trình liên kết để tạo ra một chương trình thực thi được.
+• Một chương trình C++ bao gồm nhiều tệp mã nguồn (thường được gọi đơn giản là tệp nguồn).
+source file 1 -> compile -> object file 1 -> link -> executable file
+source file 2 -> compile -> object file 2
+
+Thiết lập Môi trường
+• Một chương trình thực thi được tạo cho sự kết hợp phần cứng/hệ thống cụ thể; 
+• chẳng hạn, chương trình không thể chạy được từ máy Mac sang PC Windows. 
+• Mã nguồn chương trình C++ có thể được biên dịch thành công và chạy trên nhiều hệ thống khác nhau.
+
+Thiết lập Môi trường
+• Tiêu chuẩn ISO C++ quy định hai thành phần:
+• Phần ngôn ngữ cốt lõi, chẳng hạn như các kiểu dựng sẵn (ví dụ: char và int) và các vòng lặp (ví dụ: câu lệnh for và câu lệnh while)
+• Các thành phần thư viện chuẩn, chẳng hạn như các container (ví dụ: vector và map) và các thao tác I/O (ví dụ: << và getline())
+• C++ là một ngôn ngữ tĩnh. 
+• Loại (type) của mọi thực thể (ví dụ: đối tượng, giá trị, tên và biểu thức) phải được trình biên dịch biết tại thời điểm sử dụng. 
+• Kiểu của một đối tượng xác định tập hợp các thao tác áp dụng cho nó.
+
+C++ Cú pháp Cơ sở
+• int main() { } // the minimal C++ program 
+• Hello, World!
+1. #include <iostream> 
+2. int main() { 
+3. std::cout << "Hello, World!\n"; 
+4. } 
+• Trình biên dịch dùng cơ chế luồng xuất nhập (I/O) chuẩn trong thư viện iostream
+• std::cout : luồng xuất chuẩn
+• << : gửi chuỗi (hằng) ra
+
+C++ Cú pháp Cơ sở
+1. #include <iostream> 
+2. using namespace std; // make names from std visible without std::
+3. double square(double x) // square a double precision floating-point number
+4. {
+5. return x∗x; 
+6. }
+7. void print_square(double x) 
+8. { 
+9. cout << "the square of " << x << " is " << square(x) << "\n"; 
+10. } 
+11. int main() 
+12. { 
+13. print_square(1.234); // print: the square of 1.234 is 1.52276
+14. } 
+Kiểu trả về void cho biết hàm không trả về giá trị nào cả.
+
+C++ Các kiểu dữ liệu
+• Khai báo tường minh một biến trong chương trình
+ <type> <variable>;
+int inch;
+• Type: Kiểu dữ liệu, định nghĩa tập các giá trị và tập các phép toán (operations) trong kiểu.
+• Object: Đối tượng, phần nhớ chứa một giá trị thuộc một kiểu dữ liệu.
+• Value: Giá trị, tập hợp các bits được dịch thành giá trị tương ứng với kiểu.
+• Variable: Biến, tên được đặt cho đối tượng
+
+C++ Các kiểu dữ liệu
+• Có nhiều kiểu dữ liệu cơ bản
+1. bool // Boolean, possible values are true and false
+2. char // character, for example, 'a', ' z', and '9’
+3. int // integer, for example, 1, 42, and 1066
+4. double // double-precision floating-point number, for example, 3.14 and 299793.0 
+…
+• Kiểu dữ liệu cơ bản phụ thuộc phần cứng, có kích thước cố định xác định phạm vi giá trị có thể được lưu trữ trong đó
+
+C++ Các kiểu dữ liệu – Độ lớn
+• Biến char giữ giá trị là một ký tự (character), độ lớn 8-bit, hay 1 byte
+• Độ lớn các kiểu khác là bội số của một char
+• Độ lớn của kiểu được khai báo khi cài đặt thực tế (có thể khác nhau tùy loại máy tính)
+• Toán tử xác định kích thước kiểu: sizeof , 
+ví dụ :
+sizeof(char) cho kết quả =1
+sizeof(int) thường cho kết quả =4
+
+C++ Các Toán tử Số học 
+1. x+y //plus
+2. +x // unary plus
+3. x−y //minus
+4. −x // unary minus
+5. x∗y // multiply
+6. x/y //divide
+7. x%y // remainder (modulus) for integers 
+
+C++ Các Toán tử So sánh
+1. x==y //equal
+2. x!=y // not equal
+3. x<y // less than
+4. x>y // greater than
+5. x<=y // less than or equal 
+6. x>=y // greater than or equal
+
+C++ Các kiểu dữ liệu – Chuyển đổi Kiểu
+• C++ tự động thực hiện chuyển đổi kiểu giữa các kiểu cơ bản khi cần thiết
+1. void some_function() // function that doesn’t return a value
+2. {
+3. double d = 2.2; // initialize floating-point number
+4. int i = 7; // initialize integer
+5. d = d+i; // assign sum to d
+6. i = d∗i; // assign product to i (truncating the double d*i to an int)
+7. } 
+• Toán tử =: toán tử gán 
+• Toán tử ==: toán tử so sánh, kiểm tra bằng nhau
+
+C++ Các kiểu Dữ liệu – Khởi tạo Giá trị
+1. double d1 = 2.3; 
+2. double d2 {2.3}; 
+3. complex<double> z = 1; // a complex number with double-precision floating-point scalars 
+4. complex<double> z2 {d1,d2}; // initialize with constructor 
+5. complex<double> z3 = {1,2}; // the = is optional with { … } 
+6. vector<int> v {1,2,3,4,5,6}; // a vector of ints
+
+C++ Các kiểu Dữ liệu – Gán Kiểu tự động với auto
+1. auto b = true; // a bool
+2. auto ch = 'x’; // a char
+3. auto i = 123; // an int
+4. auto d = 1.2; // a double
+5. auto z = sqrt(y); // z has the type of whatever sqrt(y) returns
+• Dùng auto để 
+• Tránh phải ghi tên kiểu tường minh khi lập trình viên khó nhận biết kiểu dữ liệu chính xác của một đối tượng
+• Tên kiểu dài
+• Không dùng auto nếu:
+• Khai báo tường minh kiểu dữ liệu cho người đọc code
+• Phân biệt rõ miền giá trị và độ chính xác của biến (ví dụ: phân biệt double với float)
+
+C++ Các toán tử khác
+1. x+=y //x=x+y
+2. ++x // increment: x = x+1
+3. x−=y //x=x-y
+4. −−x // decrement: x = x-1 
+5. x∗=y // scaling: x = x*y 
+6. x/=y // scaling: x = x/y 
+7. x%=y //x=x%y
+• Các toán tử này hoạt động chính xác, thuận tiện, rất hay được sử dụng
+
+C++ Hằng số
+• const: “hứa không thay đổi giá trị này”. Để chỉ định giao diện sao cho dữ liệu được chuyển đến các hàm mà không sợ bị sửa đổi.
+• constexpr: khai báo hằng “được đánh giá tại thời điểm biên dịch”. Để chỉ định hằng số, cho phép đặt dữ liệu vào bộ nhớ khó bị hỏng và để đảm bảo hiệu suất.
+const int dmv = 17; // dmv is a named constant
+int var = 17; // var is not a constant
+constexpr double max1 = 1.4∗square(dmv); // OK if square(17) is a constant expression
+constexpr double max2 = 1.4∗square(var); // error: var is not a constant expression
+const double max3 = 1.4∗square(var); // OK, may be evaluated at run time
+double sum(const vector<double>&); // sum will not modify its argument
+vector<double> v {1.2, 3.4, 4.5}; // v is not a constant
+const double s1 = sum(v); // OK: evaluated at run time
+constexpr double s2 = sum(v); // error: sum(v) not constant expression
+
+C++ loops – Kiểm tra bằng Vòng lặp
+bool accept3()
+{
+int tries = 1;
+while (tries<4) {
+cout << "Do you want to proceed (y or n)?\n"; // write question
+char answer = 0;
+cin >> answer; // read answer
+switch (answer) {
+case 'y':
+return true;
+case 'n':
+return false;
+default:
+cout << "Sorry, I don't understand that.\n";
+++tries; // increment
+}
+}
+cout << "I'll take that for a no.\n";
+return false;
+}
+
+C++ Arrays, Pointers - Mảng, Con trỏ
+• [ ]: mảng của các giá trị thuộc <kiểu>
+char v[6]; // array of 6 characters
+• * : con trỏ tới giá trị thuộc <kiểu>
+char∗ p; // pointer to character
+• Phần tử đầu tiên của mảng ở vị trí 0
+• Mảng v có 6 phần tử v[0], v[1], …, v[5]
+• Độ lớn của mảng phải là một biểu thức không đổi
+
+C++ Arrays, Pointers - Mảng, Con trỏ
+• Biến con trỏ giữ địa chỉ của đối tượng thuộc về kiểu đã khai báo
+char∗ p = &v[3]; // p points to v’s fourth element
+char x = ∗p; // *p is the object that p points to
+• Tiền tố * mang nghĩa “nội dung của” 
+• Tiền tố & mang nghĩa “địa chỉ của”
+
+C++ Arrays, Pointers - Mảng, Con trỏ và Vòng lặp
+• Chép các phần tử mảng sang mảng khác
+void copy_fct()
+{
+int v1[10] = {0,1,2,3,4,5,6,7,8,9};
+int v2[10]; // to become a copy of v1
+for (auto i=0; i!=10; ++i) // copy elements
+v2[i]=v1[i];
+// ...
+}
+
+C++ Arrays, Pointers - Mảng, Con trỏ và Vòng lặp
+• Duyệt phần tử mảng dùng khai báo auto
+• “Với từng phần tử của v, tính từ đầu đến cuối mảng, chép giá trị của phần tử đó vào x rồi in x ra”
+void print()
+{
+int v[] = {0,1,2,3,4,5,6,7,8,9};
+for (auto x : v) // for each x in v
+cout << x << '\n';
+for (auto x : {10,21,32,43,54,65})
+cout << x << '\n';
+// ...
+}
+• for tự động duyệt toàn bộ các phần tử mảng
+
+C++ References – Tham chiếu
+• Dùng biến tham chiếu đến phần tử mảng
+• Tiền tố & có nghĩa “tham chiếu đến”
+void increment()
+{
+int v[] = {0,1,2,3,4,5,6,7,8,9};
+for (auto& x : v)
+++x;
+// ...
+}
+
+C++ Mảng, Con trỏ, Tham chiếu
+• Các toán tử & , * , [ ] gọi là toán tử khai báo
+T a[n]; // T[n]: array of n Ts
+T∗ p; // T*: pointer to T
+T& r; // T&: reference to T
+T f(A); // T(A): function taking an argument of type A returning a result of type T
+• Đảm bảo con trỏ luôn trỏ đến một đối tượng để phép tham chiếu ngược có ý nghĩa.
+• Nếu không có đối tượng cụ thể, trỏ đến giá trị nullptr (“con trỏ rỗng” – the null pointer)
+double∗ pd = nullptr;
+Link<Record>∗ lst = nullptr; // pointer to a Link to a Record
+int x = nullptr; // error: nullptr is a pointer not an integer
+
+C++ Mảng, Con trỏ, Tham chiếu
+• Nguyên tắc thực hành: Luôn kiểm tra tính hợp lệ của con trỏ, là trỏ tới một phần tử nào đó
+int count_x(char∗ p, char x)
+// count the number of occurrences of x in p[]
+// p is assumed to point to a zero-terminated array of char (or to nothing)
+{
+if (p==nullptr) return 0;
+int count = 0;
+for (; ∗p!=0; ++p) // chuyển con trỏ trỏ tới phần tử mảng kế tiếp
+if (∗p==x)
+++count;
+return count;
+}
+
+C++ Strings - Chuỗi
+• Là mảng các ký tự char, kết thúc bằng \0 (kiểu chuỗi được định nghĩa trong C)
+char s[] = {'g', 'f', 'g', '\0’}; 
+char s[4] = {'g', 'f', 'g', '\0’}; 
+char s[4] = "gfg"; 
+char s[] = "gfg";
+C Style string:
+char e[] = "geeks"
+char e1[] = {'g', 'f', 'g', '\0'};
+char * c = "geeksforgeeks";
+C++ Style string:
+string str = ("gfg");
+string str = "gfg";
+string str; str = "gfg";
+
+C++ - Kiểu Dữ liệu do Người dùng Xác định
+• Kiểu dữ liệu tích hợp sẵn (built-in types) được tạo ra từ các kiểu dữ liệu cơ bản, qua khai báo const, hoặc dùng toán tử khai báo.
+• Phong phú nhưng ở cấp thấp, không thuận tiện khi phát triển các ứng dụng thực tế
+• C++ dùng khái niệm “trừu tượng” – abstraction – hỗ trợ lập trình viên tạo ra các cấu trúc dữ liệu cấp cao, phức tạp hơn.
+• Thiết kế và triển khai kiểu riêng phù hợp yêu cầu xây dựng ứng dụng
+• Biểu diễn kiểu, mô tả hoạt động lên kiểu được định nghĩa
+• Kiểu lớp – class
+• Kiểu liệt kê - enumeration
+
+C++ Structure – Kiểu Cấu trúc
+• Tổ chức các thành phần vào cấu trúc dữ liệu với struct
+struct Vector {
+int sz; // number of elements
+double∗ elem; // pointer to elements
+};
+• Khai báo biến của dữ liệu cấu trúc
+Vector v;
+
+C++ Structure – Kiểu Cấu trúc
+• Khởi tạo cấu trúc
+struct Vector {
+int sz; // number of elements
+double∗ elem; // pointer to elements
+};
+void vector_init(Vector& v, int s)
+{
+v.elem = new double[s]; // allocate an array of s doubles
+v.sz = s;
+}
+• Vector& v : truyền v bằng tham chiếu, cho phép hàm vector_init() sửa đổi nội dung mà v trỏ tới 
+• new : toán tử cấp phát vùng nhớ từ bộ nhớ động (dynamic memory) và vùng heap
+
+C++ Structure – Kiểu Cấu trúc – Cách Sử dụng
+• Ví dụ
+struct Vector {
+int sz; // number of elements
+double∗ elem; // pointer to elements
+};
+double read_and_sum(int s)
+// read s integers from cin and return their sum; s is assumed to be positive
+{
+Vector v;
+vector_init(v,s); // allocate s elements for v
+for (int i=0; i!=s; ++i)
+cin>>v.elem[i]; // read into elements
+double sum = 0;
+for (int i=0; i!=s; ++i)
+sum+=v.elem[i]; // take the sum of the elements
+return sum;
+}
+
+C++ Structure – Kiểu Cấu trúc – Cách Sử dụng
+• . (dot) : toán tử truy xuất thành phần (members) của cấu trúc qua tên thành phần
+• -> : toán tử truy xuất thành phần cấu trúc bằng con trỏ
+• Ví dụ:
+struct Vector {
+int sz; // number of elements
+double∗ elem; // pointer to elements
+};
+void f(Vector v, Vector& rv, Vector∗ pv)
+{
+int i1 = v.sz; // access through name
+int i2 = rv.sz; // access through reference
+int i4 = pv−>sz; // access through pointer
+}
+
+C++ Class – Kiểu lớp
+• Tách biệt phần ”giao tiếp” - giao diện – khỏi phần dữ liệu nội bộ của đối tượng, nhằm giữ tính toàn vẹn của dữ liệu trong quá trình sử dụng.
+• Kiểu Lớp – class : là tập các thành viên (members) 
+• Thành viên: dữ liệu, hàm xử lý, các thành phần kiểu dữ liệu con
+• Hai nhóm:
+• public: gồm các thành viên xác lập giao diện của lớp
+• private: gồm các thành viên chỉ được truy xuất thông qua giao diện
+
+C++ Class – Kiểu lớp – Khai báo
+• Khai báo kiểu Lớp
+class Vector {
+public:
+Vector(int s) :elem{new double[s]}, sz{s} { } // construct a Vector
+double& operator[](int i) { return elem[i]; } // element access: subscripting
+int size() { return sz; }
+private:
+double∗ elem; // pointer to the elements
+int sz; // the number of elements
+};
+
+C++ Class – Kiểu lớp – Khai báo
+• Khai báo biến Lớp
+Vector v(6); // a Vector with 6 elements
+
+C++ Class – Kiểu lớp – Sử dụng
+• Nhập giá trị vào biến Lớp
+double read_and_sum(int s)
+{
+Vector v(s); // make a vector of s elements
+for (int i=0; i!=v.size(); ++i)
+cin>>v[i]; // read into elements
+double sum = 0;
+for (int i=0; i!=v.size(); ++i)
+sum+=v[i]; // take the sum of the elements
+return sum;
+}
+
+C++ Class – Kiểu lớp – Constructor
+• Constructor: “Hàm” được khai báo trùng tên với kiểu lớp 
+• Để tạo các đối tượng cụ thể của lớp
+• Ví dụ: constructor Vector() làm nhiệm vụ tương đương vector_init()
+• C++ đảm bảo luôn gọi constructor để tạo đối tượng
+• Tránh việc quên khởi tạo biến đối tượng của lớp
+public:
+Vector(int s) :elem{new double[s]}, sz{s} { } // construct a Vector
+
+C++ Enumerations – Kiểu Liệt kê
+• Cấu trúc liệt kê các giá trị dữ liệu
+enum class Color { red, blue, green };
+enum class Traffic_light { green, yellow, red };
+Color col = Color::red;
+Traffic_light light = Traffic_light::red;
+• Được dùng để trình bày một tập con các giá trị số nguyên.
+• Viết mã nguồn C++ dễ đọc và giảm lỗi hơn
+
+C++ Enumerations – Kiểu Liệt kê – Phạm vi
+• Thành phần liệt kê chỉ thuộc phạm vi của enum class mà nó được khai báo.
+• Color::red và Traffic_light::red là hai giá trị khác nhau
+• Những cách dùng sau sẽ gây lỗi
+Color x = red; // error: which red?
+Color y = Traffic_light::red; // error: that red is not a Color
+Color z = Color::red; // OK
+int i = Color::red; // error: Color::red is not an int
+Color c = 2; // error: 2 is not a Color
+
+C++ Enumerations – Kiểu Liệt kê – Toán tử
+• Mặc định: phép gán, phép khởi tạo, phép so sánh
+• Định nghĩa các toán tử riêng
+Traffic_light& operator++(Traffic_light& t)
+// prefix increment: ++
+{
+switch (t) {
+case Traffic_light::green: return t=Traffic_light::yellow;
+case Traffic_light::yellow: return t=Traffic_light::red;
+case Traffic_light::red: return t=Traffic_light::green;
+}
+}
+Traffic_light next = ++light; // next becomes Traffic_light::green
+
+C++ Function – Hàm
+
+C++ - Tính Mô-đun
+• Chương trình C++ gồm nhiều phần được phát triển riêng biệt: hàm, kiểu dữ liệu do người dùng định nghĩa, các cấu trúc phân cấp lớp, các mẫu (templates)
+• Cần định nghĩa các tương tác kết nối các thành phần
+• Khai báo giao diện: xác lập các phần cần có (điều kiện cần và đủ) để sử dụng hàm hoặc kiểu dữ liệu được khai báo
+
+C++ - Tính Mô-đun – Khai báo giao diện hàm
+double sqrt(double); // the square root function takes a double and returns a double
+class Vector {
+public:
+Vector(int s);
+double& operator[](int i);
+int size();
+private:
+double∗ elem; // elem points to an array of sz doubles
+int sz;
+};
+• Thân hàm hàm sqrt(double) được khai báo ở “đâu đó”, ở đây là trong thư viện toán chuẩn của C++
+double sqrt(double d) // definition of sqrt()
+{
+// ... algorithm as found in math textbook ...
+}
+
+C++ - Tính Mô-đun – Khai báo thành viên Lớp
+Vector::Vector(int s) // definition of the constructor
+:elem{new double[s]}, sz{s} // initialize members
+{
+}
+double& Vector::operator[](int i) // definition of subscripting
+{
+return elem[i];
+}
+int Vector::size() // definition of size()
+{
+return sz;
+}
+
+C++ Biên dịch riêng biệt
+• Mã người dùng chỉ thấy các khai báo kiểu và hàm mà được sử dụng.
+• Các định nghĩa về các loại và hàm đó nằm trong các tệp nguồn riêng biệt và được biên dịch riêng.
+• Tổ chức một chương trình thành tập hợp các đoạn mã bán độc lập.
+• Giảm thời gian biên dịch
+• Thực hiện phân tách có logic chương trình thành các thành phần -> giảm lỗi
+• Thư viện thường được biên dịch riêng biệt
+
+C++ Biên dịch riêng biệt – Chia tách tập tin giao diện
+• Gom nhóm các khai báo xác lập giao diện của một mô-đun vào cùng một tập tin (header file) có tên gợi nhớ tới mục đích sử dụng của nhóm này.
+• Ví dụ: file Vector.h
+// Vector.h:
+class Vector {
+public:
+Vector(int s);
+double& operator[](int i);
+int size();
+private:
+double∗ elem; // elem points to an array of sz doubles
+int sz;
+};
+
+C++ Biên dịch riêng biệt – Sử dụng tập tin giao diện
+• Sử dụng: include header file để truy xuất vào interface.
+// user.cpp:
+#include "Vector.h" // get Vector’s interface
+#include <cmath> // get the the standard-library math function interface including sqrt()
+using namespace std; // make std members visible
+double sqrt_sum(Vector& v)
+{
+double sum = 0;
+for (int i=0; i!=v.size(); ++i)
+sum+=sqrt(v[i]); // sum of square roots
+return sum;
+}
+
+C++ Biên dịch riêng biệt – Sử dụng tập tin giao diện
+• Sử dụng: include header file để truy xuất vào interface.
+// Vector.cpp:
+#include "Vector.h" // get the interface
+Vector::Vector(int s)
+:elem{new double[s]}, sz{s}
+{
+}
+double& Vector::operator[](int i)
+{
+return elem[i];
+}
+int Vector::size()
+{
+return sz;
+}
+
+C++ Biên dịch riêng biệt – Sử dụng tập tin giao diện
+• Sử dụng: include header file để truy xuất vào interface.
+(Sơ đồ minh họa user.cpp và Vector.cpp cùng include Vector.h)
+
+C++ - Namespace
+• Khai báo trong namespace các tên để tránh bị xung đột với các tên khác
+• Sử dụng các tên đã khai báo trong namespace của thư viên chuẩn
+ using namespace std;
+namespace My_code {
+class complex { /* ... */ };
+complex sqrt(complex);
+// ...
+int main();
+}
+int My_code::main()
+{
+complex z {1,2};
+auto z2 = sqrt(z);
+std::cout << '{' << z2.real() << ',' << z2.imag() << "}\n";
+// ...
+};
+int main()
+{
+return My_code::main();
+}
+
+Xử lý Lỗi trong C++ - Xử lý Ngoại lệ (Exceptions)
+• Ví dụ: sử dụng lớp Vector
+• Thử truy xuất phần tử nằm ngoài phạm vi của một vector?
+• Do không lường trước chương trình sẽ sử dụng Vector và sử dụng như thế nào
+• Người dùng không chuẩn bị để phát hiện sự cố
+• Giải pháp: Vector phải được viết để có thể phát hiện các cố gắng truy xuất phần tử ngoài phạm vi và phát cảnh báo
+
+Xử lý Lỗi trong C++ - Xử lý Ngoại lệ (Exceptions)
+• “Bắt” ngoại lệ
+double& Vector::operator[](int i)
+{
+if (i<0 || size()<=i) throw out_of_range{"Vector::operator[]"};
+return elem[i];
+}
+
+Xử lý Lỗi trong C++ - Xử lý Ngoại lệ (Exceptions)
+• Trả cảnh báo ngoại lệ cho hàm gọi thực thi Vector để xử lý ngoại lệ
+void f(Vector& v)
+{
+// ...
+try { // exceptions here are handled by the handler defined below
+v[v.size()] = 7; // try to access beyond the end of v
+}
+catch (out_of_range) { // oops: out_of_range error
+// ... handle range error ...
+}
+// ...
+}
+
+Xử lý Lỗi trong C++ - Tính Bất biến (Invariants)
+• Các mô tả, và theo đó là cài đặt đã không ràng buộc hết các trường hợp gây ra lỗi.
+• Ví dụ:
+Vector v(−27);
+• Giải pháp: kiểm tra giá trị đầu vào thỏa mãn các điều kiện ràng buộc mới cho phép tiếp tục xử lý sau đó
+Vector::Vector(int s)
+{
+if (s<0) throw length_error{};
+elem = new double[s];
+sz = s;
+}
+
+Xử lý Lỗi trong C++ - Tính Bất biến (Invariants)
+• Kiểm tra cả khả năng xảy ra lỗi trong việc cấp phát bộ nhớ.
+void test()
+{
+try {
+Vector v(−27);
+}
+catch (std::length_error) {
+// handle negative size
+}
+catch (std::bad_alloc) {
+// handle memory exhaustion
+}
+}
+
+Xử lý Lỗi trong C++ - Đánh giá tĩnh (Static Assertions)
+• Ngoại lệ chỉ báo các lỗi xảy ra trong quá trình thực thi chương trình (run-time errors)
+• Cần kiểm tra, phát hiện và xử lý cả lỗi xảy ra trong quá trình biên dịch.
+• Viết các đoạn lệnh dùng static_assert kiểm tra, đánh giá.
+• static_assert(A, S) in ra thông báo S báo lỗi biên dịch nếu điều kiện A không đúng.
+• Ví dụ:
+static_assert(4<=sizeof(int), "integers are too small"); // check integer size
+
+Xử lý Lỗi trong C++ - Đánh giá tĩnh (Static Assertions)
+• Ví dụ khác:
+constexpr double C = 299792.458; // km/s
+void f(double speed)
+{
+const double local_max = 160.0/(60∗60); // 160 km/h == 160.0/(60*60) km/s
+static_assert(speed<C,"can't go that fast"); // error: speed must be a constant
+static_assert(local_max<C,"can't go that fast"); // OK
+// ...
+}
+
+INT1339
+Ngôn ngữ Lập trình C++
+Phân tích, Thiết kế và Cài đặt
+Giảng viên: Lê Hà Thanh
+lehathanh@ptithcm.edu.vn
+
+Giới thiệu 
+• Khảo sát và phân tích bài toán 
+• Giải pháp và thiết kế chương trình 
+• Chuẩn bị dữ liệu thử nghiệm 
+• Viết chương trình 
+• Dùng git để lưu giữ công việc 
+• Kiểm thử chương trình 
+• Sửa chữa, nâng cấp chương trình 
+• Hướng dẫn Cài đặt
+
+Khảo sát và Phân tích Bài toán
+• Tiếp nhận yêu cầu
+• Điều kiện & Ràng buộc
+• Dữ kiện
+• Phân rã yêu cầu
+• Chức năng: Làm gì?
+• Đầu vào (inputs) là gì? 
+• Đầu ra (outputs) là gì?
+• Như thế nào?
+• Phi chức năng: 
+• Chạy trên HĐH nào, GUI/commandline, 
+• Nhanh, ít bộ nhớ, v.v.
+• Phân tích 
+• Mô hình chi tiết dữ liệu
+• Tiến trình xử lý
+• Tương tác giữa các thành phần trong chương trình, giữa chương trình - người
+
+Giải pháp và Thiết kế Chương trình
+• Xử lý dữ liệu
+• Thuật toán
+• Chức năng 
+• Hàm/thủ tục bổ trợ
+
+Chuẩn bị Dữ liệu Thử nghiệm
+• Bộ dữ liệu tương ứng với mô hình dữ liệu
+• Các kiểu
+• Miền giá trị
+• Kiểm tra ràng buộc giữa các thành phần dữ liệu
+• Kiểm tra tính đúng của bộ (inputs, outputs)
+• Sinh bộ dữ liệu để kiểm tra các xử lý trung gian 
+
+Viết Chương trình
+• C++: dĩ nhiên rồi
+• OOP
+• Lên mô hình các kiểu dữ liệu, lớp, thành viên
+• Các tập tin giao diện (.h)
+• Các tập tin mã xử lý (.cpp)
+• Thư viện
+• Phải ghi chú (comment) rõ ràng, đầy đủ
+• Mô tả thông tin chương trình, 
+• Quy định nhất quán giữa thành viên nhóm phát triển
+• Nguyên tắc an toàn, bảo mật mã nguồn, dữ liệu
+• Nguyên tắc chia sẻ
+
+Lưu trữ Mã nguồn Chương trình
+• Git
+• Github
+• Gitlab
+• Bitbucket
+• V.v…
+• Cách lưu trữ, chia sẻ mã nguồn trên kho chứa (repo)
+
+Chạy Chương trình
+• Chạy tại máy cục bộ của người viết chương trình
+• Ghi lại các yêu cầu môi trường (HĐH), giao diện, trình biên dịch, phần mềm bổ trợ, IDE, thư viện, cùng phiên bản đang chạy.
+• Chú ý cách thức cài đặt
+• Cách dịch, chạy chương trình, cách debug chương trình
+
+Kiểm thử Chương trình
+• Các thử nghiệm với bộ dữ liệu đã chuẩn bị
+• Các thử nghiệm với dữ liệu ngẫu nhiên
+• Kết quả
+• Yêu cầu sửa chữa
+
+Sửa chữa, Nâng cấp Chương trình
+• Một chương trình không thể hoàn thiện ngay từ đầu
+• Mỗi lần hoàn chỉnh một chức năng là một bước tiến đến gần sản phẩm cuối
+• Mã nguồn được đẩy lên kho chứa (repo) – mốc công việc
+• Mỗi lần chỉnh sửa phải xuất phát từ một mã nguồn mốc
+• Quản lý các phiên bản hoàn thiện, chỉnh sửa, nâng cấp bằng GIT
+
+Hướng dẫn Cài đặt
+• Sản phẩm cần đến tay người dùng (là giáo viên)
+• Hãy cho người dùng biết cách cài đặt và chạy chương trình 
+• Cho họ thấy sản phẩm họ mong muốn
+
+Bài tập 1
+• https://github.com/Code-Recursion/Student-Record-Management-System
+
+Bài tập 2
+• https://github.com/christopher-siewert/cpp-calculator/blob/master/
+
+Bài tập 3
+• https://github.com/aryan-khanijo/Bookshop-Management-System-CPP-Project/tree/master
+
+INT1339
+Ngôn ngữ Lập trình C++
+OO – Lớp và Đối tượng
+Giảng viên: Lê Hà Thanh
+lehathanh@ptithcm.edu.vn
+
+Giới thiệu 
+• C++ Định nghĩa Lớp 
+• C++ Định nghĩa Đối tượng 
+• C++ Các hàm thành viên của lớp 
+• C++ Bộ thay đổi phương thức truy cập lớp 
+• C++ Bộ tạo (constructor) và bộ hủy (destructor)
+• C++ Hàm bạn bè (friend functions) 
+• C++ Hàm nội tuyến (inline functions) 
+• C++ Con trỏ this 
+• Con trỏ đến các lớp trong C++ 
+• Thành viên tĩnh (static members) của lớp trong C++
+
+C++ Kiểu dữ liệu Lớp
+• Kiểu dữ liệu do người dùng khai báo
+• Biểu diễn một khái niệm (concept) trong mã chương trình,
+• Có các thuộc tính riêng
+• Cách cài đặt
+• Phương tiện ngôn ngữ
+• Phân loại:
+• Lớp cụ thể (Concrete classes)
+• Lớp trừu tượng (Abstract classes)
+• Các lớp trong cấu trúc phân tầng
+
+C++ Lớp là gì? (1/2)
+• Tập hợp các thành viên, chủ yếu bao gồm:
+• Dữ liệu (data members)
+• Hàm thành viên (member functions)
+• Hàm thành viên định nghĩa thao tác khởi tạo đối tượng, sao chép, chuyển và dọn dẹp khi xóa đối tượng thuộc về kiểu lớp
+• Toán tử truy cập: . (dot) cho đối tượng, -> cho con trỏ đến đối tượng
+• Có thể định nghĩa (lại) các toán tử (vd: +, !, []) dùng cho lớp 
+
+C++ Lớp là gì? (2/2)
+• Một lớp là một không gian tên (namespace) chứa các thành viên của lớp
+• Các thành viên public quy định giao diện của lớp
+• Các thành viên private quy định chi tiết cài đặt của lớp
+• struct là kiểu lớp với các thành viên được khai báo mặc định là public
+
+C++ Lớp là gì? Ví dụ
+• Định nghĩa lớp
+class X {
+private: // the representation (implementation) is private
+int m;
+public: // the user interface is public
+X(int i =0) :m{i} { } // a constructor (initialize the data member m)
+int mf(int i) // a member function
+{
+int old = m;
+m = i; // set a new value
+return old; // return the old value
+}
+};
+
+C++ Lớp là gì? Ví dụ
+• Khai báo đối tượng (biến) thuộc lớp và sử dụng
+X var {7}; // a variable of type X, initialized to 7
+int user(X var, X∗ ptr)
+{
+int x = var.mf(7); // access using . (dot)
+int y = ptr−>mf(9); // access using -> (arrow)
+int z = var.m; // error: cannot access private member
+}
+
+C++ Lớp – Hàm Xử lý Tách biệt
+• Định nghĩa khái niệm “ngày” bằng struct và các hàm xử lý tách biệt 
+struct Date { // representation
+int d, m, y;
+};
+void init_date(Date& d, int, int, int); // initialize d
+void add_year(Date& d, int n); // add n years to d
+void add_month(Date& d, int n); // add n months to d
+void add_day(Date& d, int n); // add n days to d
+
+C++ Lớp – Hàm Thành viên
+• struct Date với các hàm thành viên
+struct Date {
+int d, m, y;
+void init(int dd, int mm, int yy); // initialize
+void add_year(int n); // add n years
+void add_month(int n); // add n months
+void add_day(int n); // add n days
+};
+
+C++ Lớp – Cách sử dụng
+• Khai báo và sử dụng biến đối tượng thuộc lớp
+Date my_birthday;
+void f()
+{
+Date today;
+today.init(16,10,1996);
+my_birthday.init(30,12,1950);
+Date tomorrow = today;
+tomorrow.add_day(1);
+// ...
+}
+
+C++ Lớp – Hàm Thành viên – Cài đặt
+• Hàm thành viên của các lớp khác nhau có thể trùng tên -> phải chỉ định rõ tên cấu trúc lớp để phân biệt
+ <class_name>::<member_function>
+• Cài đặt hàm thành viên
+void Date::init(int dd, int mm, int yy)
+{
+d = dd;
+m = mm;
+y = yy;
+}
+
+C++ Lớp – Hàm Thành viên – Cài đặt
+• Bên trong hàm thành viên, tên thành viên có thể được sử dụng trực tiếp, ngầm hiểu là thuộc về đối tượng đang gọi đến hàm thành viên mà không cần tham chiếu tường minh qua tên đối tượng của lớp
+void Date::init(int dd, int mm, int yy)
+{
+d = dd;
+m = mm;
+y = yy;
+}
+• Với today,
+m=mm i.e. today.m=mm
+• Với my_birthday,
+m=mm i.e., my_birthday.m=mm
+Date my_birthday;
+void f()
+{
+Date today;
+today.init(16,10,1996);
+my_birthday.init(30,12,1950);
+
+C++ Lớp – Sao chép (Copy)
+• Theo mặc định, các đối tượng đều có thể được sao chép
+• Một đối tượng thuộc lớp được khởi tạo bằng một bản sao từ một đối tượng khác cùng lớp
+Date d1 = my_birthday; // initialization by copy
+Date d2 {my_birthday}; // initialization by copy
+• Bản sao của đối tượng chính là bản sao của mọi thành viên thuộc đối tượng
+• Có thể được sao chép qua phép gán 
+void f(Date& d)
+{
+d = my_birthday;
+}
+
+C++ Lớp – Kiểm soát Truy xuất Thành viên
+• Thành viên public được phép truy xuất qua lời gọi từ bên ngoài
+• Thành viên private chỉ được truy xuất bởi các hàm thành viên của lớp
+class Date {
+int d, m, y;
+public:
+void init(int dd, int mm, int yy); // initialize
+void add_year(int n); // add n years
+void add_month(int n); // add n months
+void add_day(int n); // add n days
+};
+
+C++ Lớp – Bảo vệ Thành viên private
+• Cài đặt hàm thành viên, cho phép truy xuất thành viên private:
+class Date {
+int d, m, y;
+public:
+void init(int dd, int mm, int yy); // initialize
+void add_year(int n); // add n years
+void add_month(int n); // add n months
+void add_day(int n); // add n days
+};
+void Date::add_year(int n)
+{
+y += n;
+}
+• Lỗi khi truy xuất thành viên private từ bên ngoài
+void timewarp(Date& d)
+{
+d.y −= 200; // error: Date::y is private
+}
+
+C++ Lớp – Khởi tạo Thành viên bằng Hàm Khởi tạo public
+• Dùng hàm thành viên public thực hiện các tác vụ khởi tạo cho các thành viên private
+class Date {
+int d, m, y;
+public:
+void init(int dd, int mm, int yy); // initialize
+void add_year(int n); // add n years
+void add_month(int n); // add n months
+void add_day(int n); // add n days
+};
+Date dx;
+dx.m = 3; // error: m is private
+dx.init(25,3,2011); // OK
+
+C++ Lớp – Khai báo Lớp
+• Nhắc lại: struct là một lớp với toàn bộ thành viên được mặc định là public
+struct S { /* ... */ }; ≈ class S { public: /* ... */ };
+• Theo mặc định, các thành viên trong lớp là private, 
+• Có thể khai báo tường minh bằng bộ chỉ định private 
+• Thành viên public phải được khai báo tường minh là public
+class Date1 {
+int d, m, y; // private by default
+public:
+Date1(int dd, int mm, int yy);
+void add_year(int n); // add n years
+};
+struct Date2 {
+private:
+int d, m, y;
+public:
+Date2(int dd, int mm, int yy);
+void add_year(int n); // add n years
+};
+
+C++ Lớp – Khai báo Lớp
+• Không quy định thứ tự khai báo public, private
+• Sử dụng thống nhất tạo phong cách lập trình
+class Date3 {
+public:
+Date3(int dd, int mm, int yy);
+void add_year(int n); // add n years
+private:
+int d, m, y;
+};
+class Date4 {
+public:
+Date4(int dd, int mm, int yy);
+private:
+int d, m, y;
+public:
+void add_year(int n); // add n years
+};
+
+C++ Contructors – Bộ Khởi tạo Đối tượng
+• Là hàm thành viên chịu trách nhiệm khởi tạo đối tượng
+• Khai báo cùng tên với tên lớp
+class Date {
+int d, m, y;
+public:
+Date(int dd, int mm, int yy); // constructor
+// ...
+};
+
+C++ Contructors – Bộ Khởi tạo Đối tượng
+• Khi lớp có constructor, các đối tượng của lớp đều được khởi tạo qua lời gọi đến contructor
+Date today = Date(23,6,1983);
+Date xmas(25,12,1990); // abbreviated form
+Date my_birthday; // error: initializer missing
+Date release1_0(10,12); // error: third argument missing
+• Dùng ký hiệu { } gọi contructor
+Date today = Date {23,6,1983};
+Date xmas {25,12,1990}; // abbreviated form
+Date release1_0 {10,12}; // error: third argument missing
+
+C++ Contructors – Nhiều Phương thức Khởi tạo
+• Có nhiều cách khởi tạo một đối tượng
+• Định nghĩa các constructor khác nhau, tương ứng với từng cách khởi tạo
+class Date {
+int d, m, y;
+public:
+// ...
+Date(int, int, int); // day, month, year
+Date(int, int); // day, month, today’s year
+Date(int); // day, today’s month and year
+Date(); // default Date: today
+Date(const char∗); // date in string representation
+};
+
+C++ Contructors – Nhiều Phương thức Khởi tạo
+• Các constructor phân biệt với nhau qua kiểu dữ liệu của tham số truyền vào contructor
+• Bộ dịch sẽ chọn gọi constructor có khai báo tương đồng với lời gọi
+Date today {4}; // 4, today.m, today.y
+Date july4 {"July 4, 1983"};
+Date guy {5,11}; // 5, November, today.y
+Date now; // default initialized as today
+Date start {}; // default initialized as today
+
+C++ Contructors – Khởi tạo với giá trị mặc định
+• Các constructor nhận tham số với giá trị mặc định
+class Date {
+int d, m, y;
+public:
+Date(int dd =0, int mm =0, int yy =0);
+// ...
+};
+Date::Date(int dd, int mm, int yy)
+{
+d = dd ? dd : today.d;
+m = mm ? mm : today.m;
+y = yy ? yy : today.y;
+// check that the Date is valid
+}
+
+C++ explicit Constructors 
+• constructor được gọi với lời gọi một đối số hàm ý tới việc chuyển đổi kiểu của đối số sang kiểu định nghĩa bởi lớp
+complex<double> d {1}; // d=={1,0} (§5.6.2)
+• Có thể bị trường hợp không xác định rõ ràng kiểu để khởi tạo giá trị cho đối tượng được tạo ra. Ví dụ với lớp Date:
+void my_fct(Date d);
+void f()
+{
+Date d {15}; // plausible: x becomes {15,today.m,today.y}
+// ...
+my_fct(15); // obscure
+d = 15; // obscure
+// ...
+}
+
+C++ explicit Constructors
+• constructor được khai báo explicit dùng để khởi tạo đối tượng và thực hiện chuyển kiểu tường minh
+class Date {
+int d, m, y;
+public:
+explicit Date(int dd =0, int mm =0, int yy =0);
+// ...
+};
+Date d1 {15}; // OK: considered explicit
+Date d2 = Date{15}; // OK: explicit
+Date d3 = {15}; // error: = initialization does not do implicit conversions
+Date d4 = 15; // error: = initialization does not do implicit conversions
+void f()
+{
+my_fct(15); // error: argument passing does not do implicit conversions
+my_fct({15}); // error: argument passing does not do implicit conversions
+my_fct(Date{15}); // OK: explicit
+// ...
+}
+
+C++ explicit Constructors
+• Chú ý: chỉ cần khai báo explicit một lần
+class Date {
+int d, m, y;
+public:
+explicit Date(int dd);
+// ...
+};
+Date::Date(int dd) { /* ... */ } // OK
+explicit Date::Date(int dd) { /* ... */ } // error
+
+C++ explicit Constructors
+• Khai báo explicit cho constructor có danh sách đối số tùy ý
+struct X {
+explicit X();
+explicit X(int,int);
+};
+X x1 = {}; // error: implicit
+X x2 = {1,2}; // error: implicit
+X x3 {}; // OK: explicit
+X x4 {1,2}; // OK: explicit
+int f(X);
+int i1 = f({}); // error: implicit
+int i2 = f({1,2}); // error: implicit
+int i3 = f(X{}); // OK: explicit
+int i4 = f(X{1,2}); // OK: explicit
+
+C++ Định nghĩa Hàm trong Lớp
+• Hàm thành viên có thể được định nghĩa ngay trong lớp – gọi là hàm inline
+class Date {
+public:
+void add_month(int n) { m+=n; } // increment the Date’s m
+// ...
+private:
+int d, m, y;
+};
+• Thân hàm ngắn gọn, dễ đọc-hiểu
+
+C++ Định nghĩa Hàm trong Lớp
+• Nên tách việc cài đặt hàm thành viên với khai báo hàm thành viên
+• Phong cách cài đặt
+class Date {
+public:
+void add_month(int n) { m+=n; } // increment the Date’s m
+// ...
+private:
+int d, m, y;
+};
+inline void Date::add_month(int n) // add n months
+{
+m+=n; // increment the Date’s m
+}
+
+C++ - Tính Biến đổi của Đối tượng
+• Đối tượng có thể được định nghĩa là một “hằng” đối tượng – đối tượng const
+• Định nghĩa các hàm thành viên cho các đối tượng const
+
+C++ - Hàm thành viên “hằng”
+• Hàm thành viên được chỉ định const không làm thay đổi trạng thái của đối tượng thuộc lớp
+• Ví dụ: Khai báo
+class Date {
+int d, m, y;
+public:
+int day() const { return d; }
+int month() const { return m; }
+int year() const;
+void add_year(int n); // add n years
+// ...
+};
+
+C++ - Hàm thành viên “hằng”
+• Ví dụ: Lỗi thay đổi trạng thái đối tượng
+int Date::year() const
+{
+return ++y; // error: attempt to change member value in const function
+}
+• Chú ý: phải có tiền tố const khi định nghĩa hàm thành viên bên ngoài khai báo lớp
+
+C++ - Hàm thành viên “hằng” – Quy tắc gọi 
+• Hàm thành viên const có thể được gọi bởi các đối tượng const và không-const
+• Hàm thành viên không-const chỉ có thể được gọi bởi đối tượng không-const.
+void f(Date& d, const Date& cd)
+{
+int i = d.year(); // OK
+d.add_year(1); // OK
+int j = cd.year(); // OK
+cd.add_year(1); // error: cannot change value of a const Date
+}
+
+C++ - Sự Biến đổi trong “hằng” 
+• Hàm thành viên, về logic, là const nhưng có nhu cầu cần thay đổi giá trị của biến thành viên
+• Ví dụ: 
+class Date {
+public:
+// ...
+string string_rep() const; // string representation
+private:
+bool cache_valid;
+string cache;
+void compute_cache_value(); // fill cache
+// ...
+};
+
+C++ - mutable
+• Định nghĩa: một thành viên là mutable, nghĩa là nó có thể bị thay đổi ngay cả khi đối tượng là const.
+• Ví dụ: khai báo sau
+class Date {
+public:
+// ...
+string string_rep() const; // string representation
+private:
+mutable bool cache_valid;
+mutable string cache;
+void compute_cache_value() const; // fill (mutable) cache
+// ...
+};
+
+C++ - mutable - Cài đặt
+• Định nghĩa string_rep() :
+string Date::string_rep() const
+{
+if (!cache_valid) {
+compute_cache_value();
+cache_valid = true;
+}
+return cache;
+}
+
+C++ - mutable – Sử dụng
+• Dùng string_rep() cho đối tượng const và không-const như sau:
+void f(Date d, const Date cd)
+{
+string s1 = d.string_rep();
+string s2 = cd.string_rep(); // OK!
+// ...
+}
+
+C++ Tự tham chiếu
+• Trả về một tham chiếu đến đối tượng
+• Xâu chuỗi lời gọi
+• Ví dụ: để thêm giá trị ngày, tháng, năm vào đối tượng 
+void f(Date& d)
+{
+// ...
+d.add_day(1).add_month(1).add_year(1);
+// ...
+}
+
+C++ Tự tham chiếu
+• Khai báo trả về một tham chiếu cho hàm thành viên
+class Date {
+// ...
+Date& add_year(int n); // add n years
+Date& add_month(int n); // add n months
+Date& add_day(int n); // add n days
+};
+
+C++ Tự tham chiếu – con trỏ *this 
+• Hàm thành viên non-static được gọi cho đối tượng nào (this) thì sẽ tham chiếu đến đối tượng đó (trỏ tới bởi this)
+Date& Date::add_year(int n)
+{
+if (d==29 && m==2 && !leapyear(y+n)) { // beware of February 29
+d = 1;
+m = 3;
+}
+y += n;
+return ∗this;
+}
+
+C++ Tự tham chiếu – con trỏ *this 
+• Trong hàm thành viên non-const của một class X, kiểu của this là X*
+• Trong hàm thành viên const của X, kiểu của this là const X*
+• this thường được hiểu ngầm (implicit) khi tham chiếu đến các thành viên non-static của một lớp
+• Ví dụ: tham chiếu thực tế được hiểu như sau
+Date& Date::add_year(int n)
+{
+if (this−>d==29 && this−>m==2 && !leapyear(this−>y+n)) {
+this−>d = 1;
+this−>m = 3;
+}
+this−>y += n;
+return ∗this;
+}
+
+C++ Truy xuất đến Thành viên của Lớp
+• Dùng . (dot) cho đối tượng 
+• Dùng -> cho con trỏ đến đối tượng
+struct X {
+void f();
+int m;
+};
+void user(X x, X∗ px)
+{
+m = 1; // error: there is no m in scope
+x.m = 1; // OK
+x−>m = 1; // error: x is not a pointer
+px−>m = 1; // OK
+px.m = 1; // error: px is a pointer
+}
+
+C++ Truy xuất đến Thành viên của Lớp
+• Gọi trực tiếp tên thành viên nếu đang ở trong phạm vi khai báo lớp.
+• Nhắc lại: this được hiểu ngầm trỏ tới đối tượng đang tương tác
+void X::f()
+{
+m = 1; // OK: “this->m = 1;”
+}
+• Hàm thành viên có thể gọi tên thành viên khác trước khi thành viên này được khai báo
+struct X {
+int f() { return m; } // fine: return this X’s m
+int m;
+};
+
+C++ Truy xuất đến Thành viên của Lớp
+• Nếu truy xuất đến một thành viên của lớp mà không cần quan tâm đến đối tượng cụ thể nào, dùng 
+ <class_name>::<member_name> 
+struct S {
+int m;
+int f();
+static int sm;
+};
+int X::f() { return m; } // X’s f
+int X::sm {7}; // X’s static member sm
+int (S::∗) pmf() {&S::f}; // X’s member f
+
+C++ Thành viên “tĩnh” – static Members
+• Biến thành viên static: Biến thành viên thuộc phạm vi Lớp, không thuộc phạm vi của bất kỳ đối tượng của lớp
+• Chỉ có một bản sao duy nhất của biến static 
+• Hàm thành viên static: Hàm truy xuất đến các thành viên của lớp nhưng không cần gọi thông qua đối tượng được tạo ra từ lớp
+• Ví dụ: 
+class Date {
+int d, m, y;
+static Date default_date;
+public:
+Date(int dd =0, int mm =0, int yy =0);
+// ...
+static void set_default(int dd, int mm, int yy); // set default_date to Date(dd,mm,yy)
+};
+
+C++ Thành viên “tĩnh” – static Members
+• Sử dụng biến thành viên static
+Date::Date(int dd, int mm, int yy)
+{
+d = dd ? dd : default_date.d;
+m = mm ? mm : default_date.m;
+y = yy ? yy : default_date.y;
+// ... check that the Date is valid ...
+}
+• Sử dụng hàm thành viên static
+void f()
+{
+Date::set_default(4,5,1945); // call Date’s static member set_default()
+}
+
+C++ Thành viên “tĩnh” – static Members
+• Định nghĩa thành viên static
+• Chú ý: không dùng từ khóa static khi định nghĩa thành viên static 
+Date Date::default_date {16,12,1770}; // definition of Date::default_date
+void Date::set_default(int d, int m, int y) // definition of Date::set_default
+{
+default_date = {d,m,y}; // assign new value to default_date
+}
+
+C++ Thành viên “tĩnh” – static Members
+• Dùng tên lớp để trực tiếp lấy giá trị của biến thành viên static, không cần viết riêng hàm truy xuất.
+Date copy_of_default_date = Date{};
+void f(Date);
+void g()
+{
+f(Date{});
+}
+
+C++ Thành viên “tĩnh” – static Members
+• Nếu kiểu mục tiêu là rõ ràng thì dùng {} thay cho tên kiểu
+• Ví dụ:
+void f1(Date);
+void f2(Date);
+void f2(int);
+void g()
+{
+f1({}); // OK: equivalent to f1(Date{})
+f2({}); // error: ambiguous: f2(int) or f2(Date)?
+f2(Date{}); // OK
+}
+
+C++ Các Kiểu Thành Viên
+• Tên kiểu và tên bí danh của kiểu có thể là thành viên của lớp.
+template<typename T>
+class Tree {
+using value_type = T; // member alias
+enum Policy { rb, splay, treeps }; // member enum
+class Node { // member class
+Node∗ right;
+Node∗ left;
+value_type value;
+public:
+void f(Tree∗);
+};
+Node∗ top;
+public:
+void g(const T&);
+// ...
+};
+
+C++ Các Kiểu Thành Viên
+• Một lớp thành viên – lớp lồng nhau (nested class) có thể tham chiếu đến các kiểu và thành viên static của lớp chứa nó.
+• Chỉ có thể tham chiếu đến các thành viên non-static khi được cung cấp một đối tượng của lớp bao quanh để tham chiếu đến.
+
+C++ Các Kiểu Thành Viên
+• Một lớp lồng nhau có thể truy cập đến các thành viên của lớp bao, bao gồm cả các thành viên private nhưng không có khái niệm về đối tượng hiện tại của lớp bao ngoài này.
+• Ví dụ: 
+template<typename T>
+void Tree::Node::f(Tree∗ p)
+{
+top = right; // error: no object of type Tree specified
+p−>top = right; // OK
+value_type v = left−>value; // OK: value_type is not associated with an object
+}
+
+C++ Kiểu Lớp Cụ thể (Concrete classes)
+• Tương đương kiểu dữ liệu sẵn có trong C++, 
+• Có cú pháp và tập các toán tử riêng
+• Ví dụ: kiểu số phức, kiểu số nguyên có độ chính xác bất kỳ được dùng như kiểu int
+• Có cách trình bày dữ liệu đặc thù
+• Ví dụ vector hay string được xem như là mở rộng từ kiểu mảng (array)
+
+C++ Các Kiểu Thành Viên
+• Chú ý: một lớp không có quyền truy xuất đến các thành viên của lớp lồng nhau bên trong nó.
+template<typename T>
+void Tree::g(Tree::Node∗ p)
+{
+value_type val = right−>value; // error: no object of type Tree::Node
+value_type v = p−>right−>value; // error: Node::right is private
+p−>f(this); // OK
+}
+
+C++ Concret Classes – Một ví dụ
+namespace Chrono {
+enum class Month { jan=1, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec };
+class Date {
+public: // public interface:
+class Bad_date { }; // exception class
+explicit Date(int dd ={}, Month mm ={}, int yy ={}); // {} means “pick a default”
+// nonmodifying functions for examining the Date:
+int day() const;
+Month month() const;
+int year() const;
+string string_rep() const; // string representation
+void char_rep(char s[], in max) const; // C-style string representation
+
+C++ Concret Classes – Một ví dụ
+// (modifying) functions for changing the Date:
+Date& add_year(int n); // add n years
+Date& add_month(int n); // add n months
+Date& add_day(int n); // add n days
+private:
+bool is_valid(); // check if this Date represents a date
+int d, m, y; // representation
+};
+bool is_date(int d, Month m, int y); // true for valid date
+bool is_leapyear(int y); // true if y is a leap year
+bool operator==(const Date& a, const Date& b);
+bool operator!=(const Date& a, const Date& b);
+const Date& default_date(); // the default date
+ostream& operator<<(ostream& os, const Date& d); // print d to os
+istream& operator>>(istream& is, Date& d); // read Date from is into d
+} // Chrono
+
+Ví dụ: Cách sử dụng lớp Date
+void f(Date& d)
+{
+Date lvb_day {16,Month::dec,d.year()};
+if (d.day()==29 && d.month()==Month::feb) {
+// ...
+}
+if (midnight()) d.add_day(1);
+cout << "day after:" << d+1 << '\n';
+Date dd; // initialized to the default date
+cin>>dd;
+if (dd==d) cout << "Hurray!\n";
+}
+
+C++ Concret classes – Hàm Thành viên
+Date::Date(int dd, Month mm, int yy)
+:d{dd}, m{mm}, y{yy}
+{
+if (y == 0) y = default_date().year();
+if (m == Month{}) m = default_date().month();
+if (d == 0) d = default_date().day();
+if (!is_valid()) throw Bad_date();
+}
+
+C++ - Các hàm trợ giúp
+• Cách gọi khác: các hàm tiện ích
+• C: Gom nhóm trong một tập tin và được gọi khi cần 
+ #include “<interface_file>.h”
+• C++: khai báo một namespace
+• Ví dụ:
+namespace Chrono { // facilities for dealing with time
+class Date { /* ... */};
+int diff(Date a, Date b);
+bool is_leapyear(int y);
+bool is_date(int d, Month m, int y);
+const Date& default_date();
+Date next_weekday(Date d);
+Date next_saturday(Date d);
+// ...
+}
+
+C++ - Các hàm trợ giúp
+• Định nghĩa hàm trợ giúp
+bool Chrono::is_date(int d, Month m, int y)
+{
+int ndays;
+switch (m) {
+case Month::feb:
+ndays = 28+is_leapyear(y);
+break;
+case Month::apr: case Month::jun: case Month::sep: case Month::nov:
+ndays = 30;
+break;
+case Month::jan: case Month::mar: case Month::may: case Month::jul:
+case Month::aug: case Month::oct: case Month::dec:
+ndays = 31;
+break;
+default:
+return false;
+}
+return 1<=d && d<=ndays;
+}
+
+C++ - Các hàm trợ giúp
+• Sử dụng
+const Date& Chrono::default_date()
+{
+static Date d {1,Month::jan,1970};
+return d;
+}
+
+C++ Các Toán tử chồng lấn (Overloaded Op.)
+• Định nghĩa các toán tử để áp dụng cho một kiểu dữ liệu cụ thể
+• Ví dụ, toán tử operator==() để so sánh bằng (==) cho kiểu Date
+inline bool operator==(Date a, Date b) // equality
+{
+return a.day()==b.day() && a.month()==b.month() && a.year()==b.year();
+}
+
+C++ Các Toán tử chồng lấn (Overloaded Op.)
+• Định nghĩa các toán tử khác
+bool operator!=(Date, Date); // inequality
+bool operator<(Date, Date); // less than
+bool operator>(Date, Date); // greater than
+// ...
+Date& operator++(Date& d) { return d.add_day(1); } // increase Date by one day
+Date& operator−−(Date& d) { return d.add_day(−1); } // decrease Date by one day
+Date& operator+=(Date& d, int n) { return d.add_day(n); } // add n days
+Date& operator−=(Date& d, int n) { return d.add_day(−n); } // subtract n days
+Date operator+(Date d, int n) { return d+=n; } // add n days
+Date operator−(Date d, int n) { return d+=n; } // subtract n days
+ostream& operator<<(ostream&, Date d); // output d
+istream& operator>>(istream&, Date& d); // read into d
+
+INT1339 - Ngôn ngữ Lập trình C++
+Chồng Toán tử
+Operator Overloading
+Giảng viên: Lê Hà Thanh
+lehathanh@ptithcm.edu.vn
+
+Nội dung 
+• Các hàm toán tử 
+• Kiểu số phức 
+• Chuyển kiểu
+
+Lớp số phức complex 
+class complex { // very simplified complex
+double re, im;
+public:
+complex(double r, double i) :re{r}, im{i} { }
+complex operator+(complex);
+complex operator∗(complex);
+};
+
+Các toán tử có thể được khai báo/định nghĩa lại – Chồng toán tử
+Ý nghĩa quy định (định nghĩa) các toán tử sau có thể được khai báo:
++ − * / % ^ &
+| ~ ! = < > +=
+−= *= /= %= ^= &= |=
+<< >> >>= <<= == != <=
+>= && || ++ −− −>* ,
+−> [] () new new[] delete delete[]
+• Khai báo hàm toán tử: từ khóa operator sau đó là toán tử
+operator<<
+
+Các toán tử không thể khai báo chồng
+Các toán tử sau không thể định nghĩa lại:
+ :: toán tử phạm vi 
+ . toán tử chọn thành viên
+ .* toán tử chọn thành viên thông qua con trỏ tới thành viên
+ sizeof kích thước đối tượng 
+ alignof hàm căn chỉnh đối tượng
+ typeid thông tin kiểu type-info của một đối tượng
+ ? : toán tử đánh giá điều kiện
+
+Cài đặt và sử dụng hàm toán tử
+• Cài đặt hàm như bình thường
+• Chú ý ngữ nghĩa của toán tử để viết xử lý nội hàm
+• Sử dụng:
+void f(complex a, complex b)
+{
+complex c = a + b; // shorthand
+complex d = a.operator+(b); // explicit call
+}
+
+Toán tử nhị phân (Binary operator)
+class X {
+public:
+void operator+(int);
+X(int);
+};
+void operator+(X,X);
+void operator+(X,double);
+void f(X a)
+{
+a+1; // a.operator+(1)
+1+a; // ::operator+(X(1),a)
+a+1.0; // ::operator+(a,1.0)
+}
+
+Toán tử đơn phân (Unary operator)
+class X {
+public: // members (with implicit this pointer):
+X∗ operator&(); // prefix unary & (address of)
+X operator&(X); // binary & (and)
+X operator++(int); // postfix increment
+X operator&(X,X); // error: ternary
+X operator/(); // error: unary /
+};
+// nonmember functions :
+X operator−(X); // prefix unary minus
+X operator−(X,X); // binary minus
+X operator−−(X&,int); // postfix decrement
+X operator−(); // error: no operand
+X operator−(X,X,X); // error: ternary
+X operator%(X); // error: unary %
+
+Toán tử và Kiểu dữ liệu do người dùng định nghĩa
+• Hàm toán tử phải là thành viên của kiểu dữ liệu này, hoặc
+Phải có ít nhất một đối số thuộc kiểu dữ liệu tương ứng
+• Chú ý khác biệt giữa:
+ aa+2
+ 2+aa 
+
+Toán tử và Kiểu dữ liệu do người dùng định nghĩa – ví dụ với kiểu liệt kê
+enum Day { sun, mon, tue, wed, thu, fri, sat };
+Day& operator++(Day& d)
+{
+return d = (sat==d) ? sun : static_cast<Day>(d+1);
+}
+
+Kiểu số phức (complex)
+• Đọc về kiểu số phức trong phần 18.3, tài liệu “The C++ Programming Language 4ht Edition”
+
+Chuyển kiểu
+Có thể thực hiện bằng cách:
+• Dùng constructor
+• Không xác định việc chuyển kiểu ngầm định từ kiểu do người dùng định nghĩa sang kiểu tích hợp sẵn
+• Không xác định được phép chuyển kiểu từ một lớp mới sang lớp đã được định nghĩa trước đó
+• Dùng toán tử chuyển kiểu
+
+Các toán tử chuyển kiểu
+Hàm toán tử định nghĩa một phép chuyển đổi từ kiểu X sang kiểu T như sau:
+ X::operator T(),
+trong đó T là tên kiểu.
+
+Các toán tử chuyển kiểu – Ví dụ
+Ví dụ: Định nghĩa kiểu Tiny là số nguyên không âm 6-bit có thể sử dụng lẫn với kiểu số nguyên thông thường trong các phép toán số học. Tiny gửi Bad_range để báo trường hợp phép toán gây lỗi tràn số (overflow) hoặc thiếu số (underflow):
+class Tiny {
+char v;
+void assign(int i) { if (i&˜077) throw Bad_range(); v=i; }
+public:
+class Bad_range { };
+Tiny(int i) { assign(i); }
+Tiny& operator=(int i) { assign(i); return ∗this; }
+operator int() const { return v; } // conversion to int function
+};
+int main()
+{
+Tiny c1 = 2;
+Tiny c2 = 62;
+Tiny c3 = c2−c1; // c3 = 60
+Tiny c4 = c3; // no range check (not necessary)
+int i = c1+c2; // i = 64
+c1 = c1+c2; // range error: c1 can’t be 64
+i = c3−64; // i = -4
+c2 = c3−64; // range error: c2 can’t be -4
+c3 = c4; // no range check (not necessary)
+}
+
+Các toán tử chuyển kiểu explicit 
+template <typename T, typename D = default_delete<T>>
+class unique_ptr {
+public:
+// ...
+explicit operator bool() const noexcept; // does *this hold a pointer (that is not nullptr)?
+// ...
+};
+void use(unique_ptr<Record> p, unique_ptr<int> q)
+{
+if (!p) // OK: we want this use
+throw Invalid_uninque_ptr{};
+bool b = p; // error; suspicious use
+int x = p+q; // error; we definitly don’t want this
+}
+
+Tính mơ hồ (ambiguity)
+Phép gán một giá trị của kiểu V vào một đối tượng thuộc kiểu lớp X là hợp lệ nếu có một toán tử gán X::operator=(Z) sao cho V là Z hoặc có một phép chuyển đổi duy nhất từ V thành Z.
+Nếu một giá trị của kiểu chuyển đến có thể được khởi tạo bằng nhiều cách -> không hợp lệ.
+Do đó, không định nghĩa phép chuyển kiểu bằng cả hai cách: dùng hàm tạo constructor và dùng hàm toán tử chuyển đổi.
+
+Tính mơ hồ (ambiguity) – Ví dụ 01
+class X { /* ... */ X(int); X(const char∗); };
+class Y { /* ... */ Y(int); };
+class Z { /* ... */ Z(X); };
+X f(X);
+Y f(Y);
+Z g(Z);
+void k1()
+{
+f(1); // error: ambiguous f(X(1)) or f(Y(1))?
+f(X{1}); // OK
+f(Y{1}); // OK
+g("Mack"); // error: two user-defined conversions needed; g(Z{X{"Mack"}}) not tried
+g(X{"Doc"}); // OK: g(Z{X{"Doc"}})
+g(Z{"Suzy"}); // OK: g(Z{X{"Suzy"}})
+}
+
+Tính mơ hồ (ambiguity) – Ví dụ 02
+class Quad {
+public:
+Quad(double);
+// ...
+};
+Quad operator+(Quad,Quad);
+void f(double a1, double a2)
+{
+Quad r1 = a1+a2; // double-precision floating-point add
+Quad r2 = Quad{a1}+a2; // force quad arithmetic
+}
+
+Các toán tử đặc biệt 
+[] () −> ++ −− new delete
+
+Phạm vi áp dụng viết chồng hàm
+Các toán tử có vai trò quan trọng trong:
+• Các container. Ví dụ: vector, map
+• Các con trỏ đặc biệt. Ví dụ: unique_ptr, shared_ptr
+• Các phép lặp 
+
+[]
+Hàm toán tử operator[]() phải là hàm thành viên non-static.
+struct Assoc {
+vector<pair<string,int>> vec; // vector of {name,value} pairs
+const int& operator[] (const string&) const;
+int& operator[](const string&);
+};
+int& Assoc::operator[](const string& s)
+// search for s; return a reference to its value if found;
+// otherwise, make a new pair {s,0} and return a reference to its value
+{
+for (auto x : vec)
+if (s == x.first) return x.second;
+vec.push_back({s,0}); // initial value: 0
+return vec.back().second; // return last element
+}
+int main() // count the occurrences of each word on input
+{
+Assoc values;
+string buf;
+while (cin>>buf) ++values[buf];
+for (auto x : values.vec)
+cout << '{' << x.first << ',' << x.second << "}\n";
+}
+
+() - toán tử gọi hàm
+• Đối tượng đóng vai trò hàm được gọi là đối tượng hàm
+struct Action {
+int operator()(int);
+pair<int,int> operator()(int,int);
+double operator()(double);
+// ...
+};
+void f(Action act)
+{
+int x = act(2);
+auto y = act(3,4);
+double z = act(2.3);
+// ...
+};
+
+() - toán tử gọi hàm – Ví dụ
+class Add {
+complex val;
+public:
+Add(complex c) :val{c} { } // save a value
+Add(double r, double i) :val{{r,i}} { }
+void operator()(complex& c) const { c += val; } // add a value to argument
+};
+void h(vector<complex>& vec, list<complex>& lst, complex z)
+{
+for_each(vec.begin(),vec.end(),Add{2,3});
+for_each(lst.begin(),lst.end(),Add{z});
+}
+template<typename Iter, typename Fct>
+Fct for_each(Iter b, Iter e, Fct f)
+{
+while (b != e) f(∗b++);
+return f;
+}
+
+-> - Toán tử hủy tham chiếu
+Toán tử hủy tham chiếu -> (toán tử mũi tên), có thể được định nghĩa như là một toán tử hậu tố đơn phân.
+Ví dụ: 
+class Ptr {
+// ...
+X∗ operator−>();
+};
+Đối tượng của lớp Ptr có thể được sử dụng để truy xuất đến các thành viên của lớp X, tương tự như các dùng con trỏ.
+Ví dụ:
+void f(Ptr p)
+{
+p−>m = 7; // (p.operator->())->m = 7
+}
+
+-> - Ví dụ
+template<typename T>
+class Disk_ptr {
+string identifier;
+T∗ in_core_address;
+// ...
+public:
+Disk_ptr(const string& s) : identifier{s}, in_core_address{nullptr} { }
+˜Disk_ptr() { write_to_disk(in_core_address,identifier); }
+T∗ operator−>()
+{
+if (in_core_address == nullptr)
+in_core_address = read_from_disk(identifier);
+return in_core_address;
+}
+};
+struct Rec {
+string name;
+// ...
+};
+void update(const string& s)
+{
+Disk_ptr<Rec> p {s}; // get Disk_ptr for s
+p−>name = "Roscoe"; // update s; if necessary, first retrieve from disk
+// ...
+} // p’s destructor writes back to disk
+
+++ và -- 
+void f1(X a) // traditional use
+{
+X v[200];
+X∗ p = &v[0];
+p−−;
+∗p = a; // oops: p out of range, uncaught
+++p;
+∗p = a; // OK
+}
+void f2(Ptr<X> a) // checked
+{
+X v[200];
+Ptr<X> p(&v[0],v);
+p−−;
+∗p = a; // run-time error: p out of range
+++p;
+∗p = a; // OK
+}
+
+++ và -- 
+Định nghĩa lại các phép ++ và -- trong cả hai trường hợp dùng: hậu tố và tiền tố.
+template<typename T>
+class Ptr {
+T∗ ptr;
+T∗ array;
+int sz;
+public:
+template<int N>
+Ptr(T∗ p, T(&a)[N]); // bind to array a, sz==N, initial value p
+Ptr(T∗ p, T∗ a, int s); // bind to array a of size s, initial value p
+Ptr(T∗ p); // bind to single object, sz==0, initial value p
+Ptr& operator++(); // prefix
+Ptr operator++(int); // postfix
+Ptr& operator−−(); // prefix
+Ptr operator−−(int); // postfix
+T& operator∗(); // prefix
+};
+
+++ và -- 
+Định nghĩa lại các phép ++ và -- trong cả hai trường hợp dùng: hậu tố và tiền tố.
+Phép cộng-tiền tố có thể trả về một tham chiếu đến đối tượng của nó.
+Phép cộng-hậu tố phải tạo ra một đối tượng mới rồi sau đó mới trả về đối tượng này.
+Ví dụ:
+template<typename T>
+Ptr& Ptr<T>::operator++() // return the current object after incrementing
+{
+// ... check that ptr+1 can be pointed to ...
+return ∗++ptr;
+}
+template<typename T>
+Ptr Ptr<T>::operator++(int) // increment and return a Ptr with the old value
+{
+// ... check that ptr+1 can be pointed to ...
+Ptr<T> old {ptr,array,sz};
+++ptr;
+return old;
+}
+void f3(T a) // checked
+{
+T v[200];
+Ptr<T> p(&v[0],v,200);
+p.operator−−(0); // suffix: p--
+p.operator∗() = a; // run-time error: p out of range
+p.operator++(); // prefix: ++p
+p.operator∗() = a; // OK
+}
+
+new và delete 
+• Toán tử new gọi operator new() để cấp phát bộ nhớ
+• Toán tử delete gọi operator delete() để giải phóng phần bộ nhớ đã cấp phát
+• Khai báo:
+void∗ operator new(size_t); // use for individual object
+void∗ operator new[](size_t); // use for array
+void operator delete(void∗, size_t); // use for individual object
+void operator delete[](void∗, size_t); // use for array
+
+new và delete – Ví dụ
+class Employee {
+public:
+// ...
+void∗ operator new(size_t);
+void operator delete(void∗, size_t);
+void∗ operator new[](size_t);
+void operator delete[](void∗, size_t);
+};
+void∗ Employee::operator new(size_t s)
+{
+// allocate s bytes of memory and return a pointer to it
+}
+void Employee::operator delete(void∗ p, size_t s)
+{
+if (p) { // delete only if p!=0; see §11.2, §11.2.3
+// assume p points to s bytes of memory allocated by Employee::operator new()
+// and free that memory for reuse
+}
+}
+
+Các giá trị do người dùng định nghĩa
+123 // int
+1.2 // double
+1.2F // float
+'a' // char
+1ULL // unsigned long long
+0xD0 // hexadecimal unsigned
+"as" // C-style string (const char[3])
+"Hi!"s // string, not “zero-terminated array of char”
+1.2i // imaginary
+101010111000101b // binary
+123s // seconds
+123.56km // not miles! (units)
+1234567890123456789012345678901234567890x // extended-precision
+
+Các giá trị do người dùng định nghĩa
+Toán tử định trị (literal operator) ánh xạ một giá trị có kèm theo một hậu tố vào kiểu dữ liệu muốn dùng.
+Ví dụ: 
+constexpr complex<double> operator"" i(long double d) // imaginary literal
+{
+return {0,d}; // complex is a literal type
+}
+std::string operator"" s(const char∗ p, size_t n) // std::string literal
+{
+return string{p,n}; // requires free-store allocation
+}
+template<typename T> void f(const T&);
+void g()
+{
+f("Hello"); // pass pointer to char*
+f("Hello"s); // pass (five-character) string object
+f("Hello\n"s); // pass (six-character) string object
+auto z = 2+1i; // complex{2,1}
+}
+
+Định nghĩa giá trị với hậu tố
+• Giá trị số nguyên: dùng toán tử định trị với đối số unsigned long long hoặc const char*, hoặc dùng toán tử định trị mẫu, ví dụ 123m hoặc 12345678901234567890X
+• Giá trị số thực: dùng toán tử định trị với đối số long double hoặc const char*, hoặc dùng toán tử định trị mẫu, ví dụ 12345678901234567890.976543210x hoặc 3.99s
+• Giá trị chuỗi: dùng toán tử định trị nhận đối số là (const char*, size_t), ví dụ “string”s, R”Foo\bar)”_path
+• Giá trị ký tự: dùng toán tử định trị nhận đối số là ký tự thuộc kiểu char, wchar_t, char16_t. Ví dụ ‘f’_runic, u’BEEP’_w.
+
+Ví dụ
+Hỗ trợ nhập số nguyên “lớn” với chiều dài bất kỳ.
+Bignum operator"" x(const char∗ p)
+{
+return Bignum(p);
+}
+void f(Bignum);
+f(123456789012345678901234567890123456789012345x);
+
+Ví dụ
+string operator"" s(const char∗ p, size_t n);
+string s12 = "one two"s; // calls operator ""("one two",7)
+string s22 = "two\ntwo"s; // calls operator ""("two\ntwo",7)
+string sxx = R"(two\ntwo)"s; // calls operator ""("two\\ntwo",8)
+
+Lớp String và các toán tử
+
+Lớp String
+class String {
+public:
+String(); // default constructor: x{""}
+explicit String(const char∗ p); // constructor from C-style string: x{"Euler"}
+String(const String&); // copy constructor
+String& operator=(const String&); // copy assignment
+String(String&& x); // move constructor
+String& operator=(String&& x); // move assignment
+˜String() { if (short_max<sz) delete[] ptr; } // destructor
+// ...
+};
+
+Truy xuất đến các ký tự bằng [] 
+Khai báo
+class String {
+public:
+// ...
+char& operator[](int n) { return ptr[n]; } // unchecked element access
+char operator[](int n) const { return ptr[n]; }
+char& at(int n) { check(n); return ptr[n]; } // range-checked element access
+char at(int n) const { check(n); return ptr[n]; }
+String& operator+=(char c); // add c at end
+const char∗ c_str() { return ptr; } // C-style string access
+const char∗ c_str() const { return ptr; }
+int size() const { return sz; } // number of elements
+int capacity() const // elements plus available space
+{ return (sz<=short_max) ? short_max : sz+space; }
+// ...
+};
+
+Truy xuất đến các ký tự bằng [] - Ví dụ
+int hash(const String& s)
+{
+int h {s[0]};
+for (int i {1}; i!=s.size(); i++) h ^= s[i]>>1; // unchecked access to s
+return h;
+}
+
+Đại diện cho String 
+• Dễ dàng chuyển một chuỗi kiểu C-style sang kiểu String và cho phép dễ truy xuất đến các ký tự trong một String tương tự như đối với chuỗi C-style
+• Giảm thiểu việc sử dụng bộ nhớ 
+• Hỗ trợ thêm (add) ký tự ở phía cuối của một String 
+
+Đại diện cho String 
+class String {
+/*
+A simple string that implements the short string optimization
+size()==sz is the number of elements
+if size()<= short_max, the characters are held in the String object itself;
+otherwise the free store is used.
+ptr points to the start of the character sequence
+the character sequence is kept zero-terminated: ptr[size()]==0;
+this allows us to use C library string functions and to easily return a C-style string: c_str()
+To allow efficient addition of characters at end, String grows by doubling its allocation;
+capacity() is the amount of space available for characters
+(excluding the terminating 0): sz+space
+*/
+public:
+// ...
+private:
+static const int short_max = 15;
+int sz; // number of characters
+char∗ ptr;
+union {
+int space; // unused allocated space
+char ch[short_max+1]; // leave space for terminating 0
+};
+void check(int n) const // range check
+{
+if (n<0 || sz<=n)
+throw std::out_of_range("String::at()");
+}
+// ancillary member functions:
+void copy_from(const String& x);
+void move_from(String& x);
+};
+
+Hàm friend
+Một khai báo hàm thành viên thông thường có 3 đặc điểm sau:
+1. Hàm có thể truy xuất đến phần riêng (private) của khai báo lớp
+2. Hàm nằm trong phạm vi (scope) của lớp
+3. Hàm phải được gọi theo đối tượng của lớp (có con trỏ this)
+• Nếu khai báo hàm là static, thì hàm chỉ có (1) và (2)
+• Nếu khai báo một hàm không phải thành viên là friend, hàm này chỉ có (1)
+i.e., hàm friend được cấp quyền truy xuất đến phần cài đặt của lớp tương đương như vai trò hàm thành viên của lớp nhưng lại độc lập với lớp này.
+
+Ví dụ:
+constexpr rc_max {4}; // row and column size
+class Matrix;
+class Vector {
+float v[rc_max];
+// ...
+friend Vector operator∗(const Matrix&, const Vector&);
+};
+class Matrix {
+Vector v[rc_max];
+// ...
+friend Vector operator∗(const Matrix&, const Vector&);
+};
+Vector operator∗(const Matrix& m, const Vector& v)
+{
+Vector r;
+for (int i = 0; i!=rc_max; i++) { // r[i] = m[i] * v;
+r.v[i] = 0;
+for (int j = 0; j!=rc_max; j++)
+r.v[i] += m.v[i].v[j] ∗ v.v[j];
+}
+return r;
+}
+
+Hàm friend – các đặc tính
+• Khai báo friend có thể đặt ở phần private hoặc phần public 
+• Hàm friend được khai báo tường minh trong lớp “bạn” của hàm
+• Hàm friend của một lớp có thể là friend của một lớp khác.
+Ví dụ: 
+class List_iterator {
+// ...
+int∗ next();
+};
+class List {
+friend int∗ List_iterator::next();
+// ...
+};
+
+Khai báo friend cho một lớp
+• Cấp quyền truy xuất đến tất cả các hàm của lớp đó.
+class List {
+friend class List_iterator;
+// ...
+};
+• Đối số mẫu thành friend 
+template<typename T>
+class X {
+friend T;
+friend class T; // redundant “class”
+// ...
+};
+
+Ví dụ
+class C1 { }; // will become friend of N::C
+void f1(); // will become friend of N::C
+namespace N {
+class C2 { }; // will become friend of C
+void f2() { } // will become friend of C
+class C {
+int x;
+public:
+friend class C1; // OK (previously defined)
+friend void f1();
+friend class C3; // OK (defined in enclosing namespace)
+friend void f3();
+friend class C4; // First declared in N and assumed to be in N
+friend void f4();
+};
+class C3 {}; // friend of C
+void f3() { C x; x.x = 1; } // OK: friend of C
+} // namespace N
+class C4 { }; // not friend of N::C
+void f4() { N::C x; x.x = 1; } // error: x is private and f4() is not a friend of N::C
+
+Các hàm friend và hàm thành viên
+Chọn cách nào để viết các toán tử?
+Quy tắc:
+• Giảm thiểu số lượng các hàm có truy xuất đến đại diện một lớp
+• Tạo một tập hợp các hàm truy xuất phù hợp
+
+Các hàm friend và hàm thành viên
+Ví dụ: minh họa các cách viết hàm toán tử với khai báo friend và khai báo thành viên.
+class X {
+// ...
+X(int);
+int m1(); // member
+int m2() const;
+friend int f1(X&); // friend, not member
+friend int f2(const X&);
+friend int f3(X);
+};
+
+Các hàm friend và hàm thành viên
+• Hàm thành viên chỉ được gọi khi áp dụng cho các đối tượng thuộc lớp chứa hàm. Không áp dụng cách chuyển kiểu do người dùng định nghĩa cho toán hạng chính của phép tham chiếu . Và -> .
+Ví dụ:
+void g()
+{
+99.m1(); // error: X(99).m1() not tried
+99.m2(); // error: X(99).m2() not tried
+}
+• Chuyển kiểu không tường minh không được áp dụng cho các đối số tham chiếu non-const.
+-> Toán tử thay đổi trạng thái của đối tượng một lớp là thành viên hoặc là hàm nhận đối số tham chiếu non-const (hoặc đối số là con trỏ tới non-const) 
+void h()
+{
+f1(99); // error: f1(X(99)) not tried: non-const X& argument
+f2(99); // OK: f2(X(99)); const X& argument
+f3(99); // OK: f3(X(99)); X argument
+}
+
+INT1339 - Ngôn ngữ Lập trình C++
+OOP
+Sự Thừa Kế
+Giảng viên: Lê Hà Thanh
+lehathanh@ptithcm.edu.vn
+
+Nội dung
+• Lập trình hướng đối tượng
+• Các lớp cơ sở và lớp dẫn suất
+• Các hàm ảo
+• Kiểm soát truy xuất lớp và thừa kế
+• Các kiểu thừa kế
+• Đa thừa kế
+
+Lớp Dẫn xuất và lớp Cơ sở
+Viết chương trình quản lý thông tin nhân viên một công ty
+• Cấu trúc dữ liệu nhân viên
+struct Employee {
+string first_name, family_name;
+char middle_initial;
+Date hiring_date;
+short department;
+// ...
+};
+• Định nghĩa người quản lý:
+struct Manager {
+Employee emp; // manager’s employee record
+list<Employee∗> group; // people managed
+short level;
+// ...
+};
+
+Lớp Dẫn xuất và lớp Cơ sở
+Cần một khai báo rõ ràng rằng người quản lý Manager cũng là một nhân viên Employee 
+struct Manager : public Employee {
+list<Employee∗> group;
+short level;
+// ...
+};
+• Manager được dẫn xuất (derived) từ Employee. Hay phát biểu ngược lại, Employee là lớp cơ sở (base class) cho Manager.
+• Thành viên của lớp dẫn xuất: Lớp Manager có 
+• Các thành viên của lớp Employee (first_name, department, v.v.) và
+• Các thành viên riêng của nó (group, level, v.v.) 
+
+Sự Kế thừa (Inheritance)
+• Lớp dẫn xuất kế thừa các thuộc tính từ lớp cơ sở của nó.
+• Lớp cơ sở : siêu lớp (superclass)
+• Lớp dẫn xuất : lớp con (subclass)
+• Lớp dẫn xuất thường lớn hơn lớp cơ sở của nó theo nghĩa nó chứa nhiều dữ liệu hơn và cung cấp nhiều chức năng hơn
+Employee -> Manager
+Employee: first_name, family_name, ...
+Manager: first_name, family_name, ..., group, level, ...
+
+Sử dụng
+void f(Manager m1, Employee e1)
+{
+list<Employee∗> elist {&m1,&e1};
+// ...
+}
+Vì một Manager cũng là một Employee , 
+-> một con trỏ Manager* có thể được sử dụng như con trỏ Employee*
+-> Manager& có thể được sử dụng như Employee&
+Điều ngược lại, một Employee không nhất thiết là một Manager
+-> Employee* không thể được sử dụng như Manager* .
+Tổng quát:
+• Nếu một lớp dẫn xuất Derived có lớp cơ sở công khai là Base, thì Derived* có thể được gán cho một biến kiểu Base* mà không cần dùng tới phép chuyển kiểu tường minh.
+• Phép chuyển Base* thành Derived* phải là tường minh
+
+Ví dụ
+void g(Manager mm, Employee ee)
+{
+Employee∗ pe = &mm; // OK: every Manager is an Employee
+Manager∗ pm = &ee; // error: not every Employee is a Manager
+pm−>level = 2; // disaster: ee doesn’t have a level
+pm = static_cast<Manager∗>(pe); // brute force: works because pe points
+// to the Manager mm
+pm−>level = 2; // fine: pm points to the Manager mm that has a level
+}
+Chú ý: Một đối tượng của lớp dẫn xuất có thể được xem là đối tượng của lớp cơ sở thông qua con trỏ và tham chiếu.
+Ngược lại là không đúng!
+
+Các hàm thành viên trong kế thừa
+class Employee {
+public:
+void print() const;
+string full_name() const { return first_name + ' ' + middle_initial + ' ' + family_name; }
+// ...
+private:
+string first_name, family_name;
+char middle_initial;
+// ...
+};
+class Manager : public Employee {
+public:
+void print() const;
+// ...
+};
+
+Các hàm thành viên trong kế thừa
+• Một thành viên của lớp dẫn xuất có thể sử dụng các thành viên public và protected của lớp cơ sở nếu các thành viên này được khai báo trong lớp dẫn xuất.
+void Manager::print() const
+{
+cout << "name is " << full_name() << '\n';
+// ...
+}
+• Lớp dẫn xuất không truy xuất được các thành viên private của lớp cơ sở.
+void Manager::print() const
+{
+cout << " name is " << family_name << '\n'; // error!
+// ...
+}
+-> Có thể gọi các thành viên public của lớp cơ sở
+void Manager::print() const
+{
+Employee::print(); // print Employee information
+cout << level; // print Manager-specific information
+// ...
+}
+
+Hàm khởi tạo và Hàm hủy trong kế thừa
+• Hàm khởi tạo và hàm hủy của lớp cơ sở không được kế thừa.
+• Các đối tượng được tạo từ dưới lên (bottom up): đối tượng cơ sở -> thành viên -> đối tượng lớp dẫn xuất.
+Các đối tượng được hủy từ trên xuống (top down): đối tượng lớp dẫn xuất -> thành viên -> đối tượng cơ sở;
+• Mỗi lớp có thể khởi tạo các thành viên của mình (nhưng không khởi tạo trực tiếp các thành viên hoặc lớp cơ sở của lớp cơ sở của nó);
+• Các destructors trong phân cấp kế thừa cần được khai báo virtual;
+• Copy constructors của các lớp trong phân cấp kế thừa nên được dùng cẩn thận để tránh gây cắt lát;
+• Lời gọi hàm ảo với dynamic_cast hoặc typeid() trong constructor/destructor phản ánh một giai đoạn của việc tạo và hủy đối tượng
+
+Phân cấp lớp
+• Một lớp dẫn xuất có thể là một lớp cơ sở.
+class Employee { /* ... */ };
+class Manager : public Employee { /* ... */ };
+class Director : public Manager { /* ... */ };
+• Các lớp kế thừa nhau tạo thành kiến trúc phân cấp lớp
+class Temporary { /* ... */ };
+class Assistant : public Employee { /* ... */ };
+class Temp : public Temporary, public Assistant { /* ... */ };
+class Consultant : public Temporary, public Manager { /* ... */ };
+(Sơ đồ kế thừa: Employee <- Assistant, Manager. Temporary, Assistant <- Temp. Temporary, Manager <- Consultant. Manager <- Director)
+
+Hàm ảo
+Cho phép khai báo hàm trong lớp cơ sở và sau đó có thể định nghĩa lại hàm (ghi đè – override) trong lớp dẫn xuất.
+• Trình biên dịch và trình liên kết sẽ đảm bảo sự tương ứng chính xác giữa đối tượng và các hàm được áp dụng cho đối tượng.
+
+Hàm ảo – Ví dụ
+virtual void print() const :
+• print() đóng vai trò là giao diện cho hàm print() được định nghĩa trong lớp Employee và các hàm print() được định nghĩa trong các lớp dẫn xuất từ Employee.
+class Employee {
+public:
+Employee(const string& name, int dept);
+virtual void print() const;
+// ...
+private:
+string first_name, family_name;
+short department;
+// ...
+};
+
+Hàm ảo – Quy tắc Khai báo
+• Kiểu của đối số trong khai báo hàm ảo ở lớp dẫn xuất phải tương đồng với khai báo hàm trong lớp cơ sở.
+• Hàm ảo phải được định nghĩa ở lớp cơ sở nơi nó được khai báo đầu tiên.
+Ví dụ: 
+void Employee::print() const
+{
+cout << family_name << '\t' << department << '\n';
+// ...
+}
+
+Hàm ảo – Quy tắc Khai báo
+• Hàm ảo có thể được sử dụng không phụ thuộc vào lớp có các lớp dẫn xuất hay không.
+• Nếu lớp dẫn xuất không cần dùng hàm ảo thì có thể bỏ qua không cần khai báo hàm này. Chỉ cung cấp hàm nếu cần thiết.
+class Manager : public Employee {
+public:
+Manager(const string& name, int dept, int lvl);
+void print() const;
+// ...
+private:
+list<Employee∗> group;
+short level;
+// ...
+};
+void Manager::print() const
+{
+Employee::print();
+cout << "\tlevel " << level << '\n';
+// ...
+}
+
+Hàm ghi đè (override functions)
+Một hàm trong lớp dẫn xuất có cùng tên và cùng tập các kiểu đối số (chữ ký của hàm) với hàm ảo trong lớp cơ sở được gọi là ghi đè lên phiên bản ở lớp cơ sở của hàm ảo.
+• Hàm ghi ghi đè được phép trả về một kiểu là biến thể của kiểu trả về nguyên thủy.
+• Lời gọi hàm ảo có thể thực hiện tường minh tới hàm ảo với tham chiếu từ lớp sở hữu (ví dụ Employee::print() ), hoặc gọi tới hàm ghi đè tương ứng với đối tượng đang hoạt động.
+
+Hàm ghi đè – Ví dụ
+void print_list(const list<Employee∗>& s)
+{
+for (auto x : s)
+x−>print();
+}
+int main()
+{
+Employee e {"Brown",1234};
+Manager m {"Smith",1234,2};
+print_list({&e,&m});
+}
+Kết quả:
+Smith 1234
+level 2
+Brown 1234
+
+Đa hình - Polymorphism
+Là việc đối tượng (của một lớp) có các hành vi khác nhau trong các tình huống khác nhau.
+• Xác định hành vi đúng của một lớp độc lập với kiểu lớp nào được sử dụng.
+• Khai báo hàm ảo được gọi là kiểu đa hình, hay còn gọi là kiểu đa hình khi thực thi chương trình (run-time polymorphic type).
+
+Cách gọi hàm trong cơ chế đa hình
+Trình biên dịch chuyển đổi tên của một hàm ảo thành một chỉ mục (index) trong một bảng các con trỏ trỏ tới các hàm. Bảng này gọi là bảng hàm ảo (vtbl).
+Mỗi lớp có các hàm ảo đều có vtbl riêng để xác định các hàm ảo của nó.
+Employee: first_name, second_name, vtbl -> Employee::print()
+Manager: first_name, second_name, group, level, vtbl -> Manager::print()
+
+Các loại đa hình
+• Đa hình khi biên dịch (compile-time polymorphism)
+• Cơ chế chồng hàm (function overloading): các hàm cùng tên, khác tham số.
+• Trình biên dịch xác định lời gọi hàm cụ thể để liên kết với đối tượng sau khi suy ra đối tượng tại thời điểm chạy.
+• Đa hình khi thực thi (runtime polymorphism)
+• Cơ chế ghi đè hàm (function overriding): ở lớp dẫn xuất có định nghĩa lại một hoặc nhiều hàm ở lớp cơ sở.
+• Chỉ xác định được lời gọi hàm tại thời điểm thực thi.
+• Còn gọi là kết nối muộn (late binding) hay đa hình động
+
+Kiểm soát cơ chế ghi đè
+Sử dụng các chỉ định sau:
+• virtual: cho biết hàm có thể được ghi đè.
+• =0: Hàm phải được khai báo virtual và phải được ghi đè.
+• override: Hàm phải ghi đè một hàm ảo trong lớp cơ sở.
+• final: Hàm không được phép ghi đè.
+Nếu không dùng các chỉ định trên, một hàm thành viên non-static sẽ là hàm ảo nếu và chỉ nếu nó ghi đè một hàm được chỉ định virtual trong lớp cơ sở.
+
+Chỉ định override 
+Chỉ định override không phải là một phần của kiểu hàm và không được lặp lại trong định nghĩa hàm nằm bên ngoài lớp.
+class Derived : public Base {
+void f() override; // OK if Base has a virtual f()
+void g() override; // OK if Base has a virtual g()
+};
+void Derived::f() override // error: override out of class
+{
+// ...
+}
+void g() // OK
+{
+// ...
+}
+
+Chỉ định final 
+Để dừng ý định cho phép ghi đè lên hàm virtual.
+struct Node { // interface class
+virtual Type type() = 0;
+// ...
+};
+class If_statement : public Node {
+public:
+Type type() override final; // prevent further overriding
+// ...
+};
+class Modified_if_statement : public If_statement {
+public:
+Type type() override; // error: If_statement::type() is final
+// ...
+};
+
+Chỉ định final 
+Để dừng ý định cho phép ghi đè lên hàm virtual. Áp dụng cho toàn bộ các hàm trong lớp.
+class For_statement final : public Node {
+public:
+Type type() override;
+// ...
+};
+class Modified_for_statement : public For_statement { // error: For_statement is final
+Type type() override;
+// ...
+};
+
+Chỉ định final 
+Chỉ định final không phải là một phần của kiểu hàm và không được lặp lại trong định nghĩa hàm nằm bên ngoài lớp.
+class Derived : public Base {
+void f() final; // OK if Base has a virtual f()
+void g() final; // OK if Base has a virtual g()
+// ...
+};
+void Derived::f() final // error: final out of class
+{
+// ...
+}
+void g() final // OK
+{
+// ...
+}
+
+Bổ sung các thành viên lớp cơ sở bằng using 
+Các hàm không ghi chồng vượt phạm vi của lớp.
+Ví dụ:
+struct Base {
+void f(int);
+};
+struct Derived : Base {
+void f(double);
+};
+void use(Derived d)
+{
+d.f(1); // call Derived::f(double)
+Base& br = d
+br.f(1); // call Base::f(int)
+}
+
+Bổ sung các thành viên lớp cơ sở bằng using 
+Có thể bổ sung hàm vào lớp bằng khai báo using .
+-> Bổ sung vào không gian tên (namespace) của lớp.
+Ví dụ:
+struct Base {
+void f(int);
+};
+struct D2 : Base {
+using Base::f; // bring all fs from Base into D2
+void f(double);
+};
+void use2(D2 d)
+{
+d.f(1); // call D2::f(int), that is, Base::f(int)
+Base& br = d
+br.f(1); // call Base::f(int)
+}
+
+Bổ sung các thành viên lớp cơ sở bằng using 
+Có thể bổ sung các hàm từ nhiều lớp cơ sở.
+Ví dụ:
+struct B1 {
+void f(int);
+};
+struct B2 {
+void f(double);
+};
+struct D : B1, B2 {
+using B1::f;
+using B2::f;
+void f(char);
+};
+void use(D d)
+{
+d.f(1); // call D::f(int), that is, B1::f(int)
+d.f('a'); // call D::f(char)
+d.f(1.0); // call D::f(double), that is, B2::f(double)
+}
+
+Kế thừa các hàm tạo
+Ví dụ: tạo một lớp vector mới tương tự std::vector nhưng có thêm phép kiểm tra miền giá trị kích thước vector.
+template<class T>
+struct Vector : std::vector<T> {
+T& operator[](size_type i) { check(i); return this−>elem(i); }
+const T& operator[](size_type i) const { check(i); return this−>elem(i); }
+void check(size_type i) { if (this−>size()<i) throw range_error{"Vector::check() failed"}; }
+};
+Khai báo này đã không kế thừa các hàm tạo từ std::vector, nên gây lỗi khởi tạo vector.
+Vector<int> v { 1, 2, 3, 5, 8 }; // error: no initializer-list constructor
+
+Kế thừa các hàm tạo
+template<class T>
+struct Vector : std::vector<T> {
+using vector<T>::vector; // inherit constructors
+T& operator[](size_type i) { check(i); return this−>elem(i); }
+const T& operator[](size_type i) const { check(i); return this−>elem(i); }
+void check(size_type i) { if (this−>size()<i) throw Bad_index(i); }
+};
+Vector<int> v { 1, 2, 3, 5, 8 }; // OK: use initializer-list constructor from std::vector
+
+Kế thừa các hàm tạo - Cẩn thận khi khởi tạo biến thành viên trong lớp kế thừa
+struct B1 {
+B1(int) { }
+};
+struct D1 : B1 {
+using B1::B1; // implicitly declares D1(int)
+string s; // string has a default constructor
+int x; // we “forgot” to provide for initialization of x
+};
+void test()
+{
+D1 d {6}; // oops: d.x is not initialized
+D1 e; // error: D1 has no default constructor
+}
+
+Kế thừa các hàm tạo - Cẩn thận khi khởi tạo biến thành viên trong lớp kế thừa
+Cách khắc phục
+struct B1 {
+B1(int) { }
+};
+struct D1 : B1 {
+D1(int i) : B1(i) { }
+string s; // string has a default constructor
+int x; // we “forgot” to provide for initialization of x
+};
+struct B1 {
+B1(int) { }
+};
+struct D1 : B1 {
+using B1::B1; // implicitly declares D1(int)
+int x {0}; // note: x is initialized
+};
+void test()
+{
+D1 d {6}; // d.x is zero
+}
+
+Các Lớp Trừu tượng
+Abstract Classes
+
+Các khái niệm và Định nghĩa
+• Một hàm ảo được định nghĩa “thuần ảo” bằng chỉ định =0.
+Một lớp có một hoặc nhiều hàm ảo thuần được gọi là lớp trừu tượng.
+• Lớp trừu tượng là giao diện cho các đối tượng được truy cập thông qua con trỏ và tham chiếu (nhằm bảo toàn tính chất đa hình).
+-> Lớp trừu tượng có một hàm hủy ảo.
+• Không có đối tượng nào được tạo ra từ lớp trừu tượng
+-> Lớp trừu tượng không có hàm tạo
+
+Ví dụ AC_01
+class Shape { // abstract class
+public:
+virtual void rotate(int) = 0; // pure virtual function
+virtual void draw() const = 0; // pure virtual function
+virtual bool is_closed() const = 0; // pure virtual function
+// ...
+virtual ˜Shape(); // virtual
+};
+
+Ví dụ AC_02
+• Lớp trừu tượng chỉ có thể được sử dụng như là một giao diện cho các lớp khác.
+class Point { /* ... */ };
+class Circle : public Shape {
+public:
+void rotate(int) override { }
+void draw() const override;
+bool is_closed() const override { return true; }
+Circle(Point p, int r);
+private:
+Point center;
+int radius;
+};
+
+Lớp dẫn xuất trừu tượng 
+• Một hàm thuần ảo không được định nghĩa lại ở lớp kế thừa (là lớp dẫn xuất) vẫn giữ nguyên tính chất hàm thuần ảo
+-> Lớp dẫn xuất cũng là lớp trừu tượng.
+Ví dụ: 
+class Polygon : public Shape { // abstract class
+public:
+bool is_closed() const override { return true; }
+// ... draw and rotate not overridden ...
+};
+Polygon b {p1,p2,p3,p4}; // error: declaration of object of abstract class Polygon
+
+Khai báo khắc phục lỗi cho Polygon
+class Irregular_polygon : public Polygon {
+list<Point> lp;
+public:
+Irregular_polygon(initializer_list<Point>);
+void draw() const override;
+void rotate(int) override;
+// ...
+};
+Irregular_polygon poly {p1,p2,p3,p4}; // assume that p1 .. p4 are Points defined somewhere
+
+Lớp trừu tượng làm giao diện 
+• Lớp trừu tượng cung cấp một giao diện.
+• Chi tiết triển khai được xác lập trong các lớp kế thừa
+Ví dụ: Hệ điều hành ẩn các chi tiết của các trình điều khiển thiết bị (device drivers) sau lớp trừu tượng. 
+Sau đó mới chỉ định các trình điều khiển là lớp dẫn xuất từ giao diện, và thao tác điều khiển các trình khác nhau thông qua giao diện này.
+class Character_device {
+public:
+virtual int open(int opt) = 0;
+virtual int close(int opt) = 0;
+virtual int read(char∗ p, int n) = 0;
+virtual int write(const char∗ p, int n) = 0;
+virtual int ioctl(int ...) = 0; // device I/O control
+virtual ˜Character_device() { } // virtual destructor
+};
+
+Kiểm soát Truy cập vào thành viên của lớp
+
+Phân loại thành viên theo khả năng truy cập
+Các thành viên có thể được khai báo private, protected, hoặc public.
+• private: chỉ được truy cập và sử dụng bởi các hàm thành viên và các hàm bạn của lớp chứa.
+• protected: có thể được truy cập và sử dụng bởi các hàm thành viên và các hàm bạn của lớp chứa, và các hàm thành viên và bạn của các lớp dẫn xuất từ lớp này.
+• public: được truy cập và sử dụng tự do.
+general users -> public:
+derived class’s member functions and friends -> protected:
+own member functions and friends -> private:
+
+Ví dụ - AccCtl_01
+template<class T>
+class List {
+public:
+void insert(T);
+T get();
+// ...
+private:
+struct Link { T val; Link∗ next; };
+struct Chunk {
+enum { chunk_size = 15 };
+Link v[chunk_size];
+Chunk∗ next;
+};
+Chunk∗ allocated;
+Link∗ free;
+Link∗ get_free();
+Link∗ head;
+};
+
+Ví dụ - AccCtl_01
+template<class T>
+void List<T>::insert(T val)
+{
+Link∗ lnk = get_free();
+lnk−>val = val;
+lnk−>next = head;
+head = lnk;
+}
+template<class T>
+T List<T>::get()
+{
+if (head == 0)
+throw Underflow{}; // Underflow is my exception class
+Link∗ p= head;
+head = p−>next;
+p−>next = free;
+free = p;
+return p−>val;
+}
+
+Ví dụ - AccCtl_01
+template<class T>
+typename List<T>::Link∗ List<T>::get_free()
+{
+if (free == 0) {
+// ... allocate a new chunk and place its Links on the free list ...
+}
+Link∗ p = free;
+free = free−>next;
+return p;
+}
+
+Ví dụ - AccCtl_01 – kiểm tra truy cập
+• Các hàm không phải thành viên (ngoại trừ hàm bạn ) đều không có quyền truy cập :
+template<typename T>
+void would_be_meddler(List<T>∗ p)
+{
+List<T>::Link∗ q = 0; // error: List<T>::Link is private
+// ...
+q = p−>free; // error: List<T>::free is private
+// ...
+if (List<T>::Chunk::chunk_size > 31) { // error: List<T>::Chunk::chunk_size is private
+// ...
+}
+}
+
+Truy cập đến các lớp cơ sở
+Các lớp cơ sở được khai báo private, protected, hoặc public.
+class X : public B { /* ... */ };
+class Y : protected B { /* ... */ };
+class Z : private B { /* ... */ };
+
+Truy cập đến các lớp cơ sở
+Giả sử lớp D dẫn xuất (kế thừa) B. 
+Khai báo lớp cơ sở B là:
+• private: các thành viên public và protected của B chỉ được sử dụng bởi các hàm thành viên và bạn của D. Chỉ các thành viên và bạn của D mới đổi được D* thành B*.
+• protected: các thành viên public và protected của B chỉ được sử dụng bởi các hàm thành viên và bạn của D, và các hàm thành viên và bạn của các lớp kế thừa từ D. Chỉ các thành viên và bạn của D và thành viên và bạn của các lớp kế thừa từ D mới đổi D* thành B*.
+• public: các thành viên public của B được sử dụng bởi hàm bất kỳ. Thành viên protected có thể được sử dụng bởi các thành viên và bạn của D và thành viên và bạn của các lớp kế thừa từ D. Bất kỳ hàm nào cũng có thể đổi D* thành B*.
+
+Đa kế thừa
+struct B {
+int m;
+static int sm;
+// ...
+};
+class D1 : public virtual B { /* ... */ } ;
+class D2 : public virtual B { /* ... */ } ;
+class D12 : public D1, private D2 { /* ... */ };
+D12∗ pd = new D12;
+B∗ pb = pd; // OK: accessible through D1
+int i1 = pd−>m; // OK: accessible through D1
+
+Khai báo using và kiểm soát truy cập
+class B {
+private:
+int a;
+protected:
+int b;
+public:
+int c;
+};
+class D : public B {
+public:
+using B::a; // error: B::a is private
+using B::b; // make B::b publicly available through D
+};
+
+Khai báo using và kiểm soát truy cập
+class BB : private B { // give access to B::b and B::c, but not B::a
+public:
+using B::b;
+using B::c;
+};
+
+Con trỏ tới các thành viên của lớp
+Các toán tử truy xuất ->* và .* 
+
+Khai báo con trỏ tới thành viên lớp
+• Dùng các toán tử ->* và .*
+• Con trỏ tới thành viên không thể gán tới void* hay các kiểu con trỏ thông thường.
+• Con trỏ rỗng có thể được gán cho con trỏ tới thành viên. Ý nghĩa: “không thành viên”
+
+Con trỏ tới các thành viên hàm
+Ví dụ:
+1. Khai báo lớp giao diện tiêu chuẩn cho các hàm chức năng
+2. Xử lý cụ thể của các chức năng sẽ được định nghĩa bởi đối tượng của lớp dẫn xuất, kế thừa từ Std_interface.
+class Std_interface {
+public:
+virtual void start() = 0;
+virtual void suspend() = 0;
+virtual void resume() = 0;
+virtual void quit() = 0;
+virtual void full_size() = 0;
+virtual void small() = 0;
+virtual ˜Std_interface() {}
+};
+
+Con trỏ tới các thành viên hàm
+• Dùng toán tử “địa chỉ của” - & - trỏ tới tên thành viên cụ thể của lớp.
+Vd: &Std_interface::suspend.
+• Khai báo biến kiểu con trỏ trỏ tới thành viên của lớp X: 
+ X::*
+using Pstd_mem = void (Std_interface::∗)(); // pointer-to-member type
+void f(Std_interface∗ p)
+{
+Pstd_mem s = &Std_interface::suspend; // pointer to suspend()
+p−>suspend(); // direct call
+p−>∗s(); // call through pointer to member
+}
+
+Con trỏ tới các thành viên hàm
+• Toán tử ->* và .* cho phép một con trỏ tới thành viên có thể được dùng kết hợp với một một đối tượng.
+Vd: 
+ p->*m liên kết m với đối tượng được trỏ bởi p. 
+ obj.*m liên kết m với đối tượng obj.
+• Kết quả trả về của con trỏ tới thành viên hàm có kiểu tương ứng với kiểu trả về của hàm đã được định nghĩa.
+• Chú ý: Không thể lưu lại kết quả của ->* hay .* để dùng sau đó!!
+
+Con trỏ tới các thành viên hàm
+Lời gọi p->*s() :
+p -> vtbl -> X::start, X::suspend (s chỉ mục tới X::suspend)
+
+Con trỏ tới các thành viên hàm – Các lưu ý (1/2)
+• Hàm được gọi qua con trỏ hàm có thể là hàm virtual.
+Ví dụ: Nếu gọi tới hàm suspend() bằng một con trỏ hàm, sẽ được hàm suspend() đúng theo đối tượng mà con trỏ tới hàm đang áp dụng.
+Ví dụ: Trong ví dụ sau dùng các con trỏ tới hàm thành viên để gọi các hàm được biểu diễn bằng các chuỗi “tên hàm” tương ứng.
+map<string,Std_interface∗> variable;
+map<string,Pstd_mem> operation;
+void call_member(string var, string oper)
+{
+(variable[var]−>∗operation[oper])(); // var.oper()
+}
+
+Con trỏ tới các thành viên hàm – Các lưu ý (2/2)
+• Vì hàm thành viên khai báo static không có liên quan đến một đối tượng cụ thể nào, nên con trỏ tới một thành viên static chỉ được xem là một con trỏ thông thường.
+Ví dụ: 
+class Task {
+// ...
+static void schedule();
+};
+void (∗p)() = &Task::schedule; // OK
+void (Task::∗ pm)() = &Task::schedule; // error: ordinary pointer assigned
+// to pointer to member
+
+Con trỏ tới các thành viên dữ liệu
+Cho khai báo một lớp cấu trúc C như sau:
+struct C {
+const char∗ val;
+int i;
+void print(int x) { cout << val << x << '\n'; }
+int f1(int);
+void f2();
+C(const char∗ v) { val = v; }
+};
+using Pmfi = void (C::∗)(int); // pointer to member function of C taking an int
+using Pm = const char∗ C::∗; // pointer to char* data member of C
+
+Con trỏ tới các thành viên dữ liệu
+Hãy phân tích đoạn chương trình:
+void f(C& z1, C& z2)
+{
+C∗ p = &z2;
+Pmfi pf = &C::print;
+Pm pm = &C::val;
+z1.print(1);
+(z1.∗pf)(2);
+z1.∗pm = "nv1 ";
+p−>∗pm = "nv2 ";
+z2.print(3);
+(p−>∗pf)(4);
+pf = &C::f1; // error: return type mismatch
+pf = &C::f2; // error: argument type mismatch
+pm = &C::i; // error: type mismatch
+pm = pf; // error: type mismatch
+}
+
+Các thành viên cơ sở và thành viên dẫn xuất
+Trong một lớp dẫn xuất ít nhất sẽ có các thành viên nó kế thừa được từ các lớp cơ sở của mình. 
+• Và thường sẽ bổ sung thêm các thành viên riêng của nó.
+->Khái niệm contravariance:
+Có thể gán con trỏ tới một thành viên của một lớp cơ sở cho một con trỏ tới một thành viên của lớp dẫn xuất.
+Điều ngược lại là không đúng!
+class Text : public Std_interface {
+public:
+void start();
+void suspend();
+// ...
+virtual void print();
+private:
+vector s;
+};
+void (Std_interface::∗ pmi)() = &Text::print; // error
+void (Text::∗pmt)() = &Std_interface::start; // OK
+
+Nguyên tắc đảm bảo an toàn khi dùng con trỏ
+Nguyên tắc đảm bảo an toàn: một con trỏ không bao giờ có thể trỏ tới một đối tượng không có ít nhất các thuộc tính mà con trỏ đã hứa sẽ truy cập tới.
+Ví dụ: xem ví dụ trang 6 và ví dụ trang 63.
+ Câu hỏi: hãy giải thích cách sử dụng con trỏ trong hai ví dụ trên.
+
+INT1339
+Ngôn ngữ Lập trình C++
+Thành viên của Lớp
+Giảng viên: Lê Hà Thanh
+lehathanh@ptithcm.edu.vn
+
+Nội dung
+• Các hàm tạo và hàm hủy - Constructors và Destructors
+• Khởi tạo đối tượng 
+• Khởi tạo thành viên và khởi tạo cơ sở
+• Sao chép và Di chuyển
+• Các hàm mặc định
+
+Giới thiệu
+• Cách tạo một đối tượng từ lớp
+• Sao chép đối tượng sang một đối tượng khác
+• Di chuyển một đối tượng sang đối tượng khác
+• Dọn dẹp khi kết thúc xử lý đối tượng
+
+Giới thiệu – Chương trình Xử lý Chuỗi
+• …(phần đầu tự thêm vào)…
+string ident(string arg) // string passed by value (copied into arg)
+{
+return arg; // return string (move the value of arg out of ident() to a caller) 
+}
+int main () 
+{ 
+string s1 {"Adams"}; // initialize string (construct in s1).
+s1 = indent(s1); // copy s1 into ident()
+// move the result of ident(s1) into s1;
+// s1’s value is "Adams".
+string s2 {"Pratchett"}; // initialize string (construct in s2)
+s1 = s2; // copy the value of s2 into s1
+// both s1 and s2 have the value "Pratchett". 
+}
+
+Giới thiệu – Đã dùng Các hàm gì?
+• Hàm tạo (constructor) khởi tạo một string bằng một chuỗi ký tự sẵn có
+• Hàm tạo sao chép (copy constructor) để chép một string (ở đây là chép vào tham số arg của hàm)
+• Hàm tạo di chuyển (move constructor) chuyển giá trị của một string (ở đây là thực hiện chuyển giá trị từ đối số arg ra khỏi hàm indent(s1) bằng cách gán giá trị trả về của hàm vào biến tạm
+• Phép gán di chuyển giá trị của một string từ biến tạm đang giữ giá trị trả về của hàm indent(s1) vào s1
+• Phép gán sao chép một string từ s2 sang s1
+• Hàm hủy (destructor) giải phóng các tài nguyên được sử dụng bởi s1, s2, và biến tạm lưu giá trị kết quả trả về của indent(s1) 
+
+Vòng đời của Đối tượng
+• Được tạo lập (bằng constructor) -> được sử dụng -> bị hủy (bằng destructor)
+• Bị ngắt bởi các thủ tục xử lý lỗi/ngoại lệ
+
+Khai báo Lớp điển hình gồm những gì?
+class X {
+X(Sometype); // “ordinary constructor”: create an object
+X(); // default constructor
+X(const X&); // copy constructor
+X(X&&); // move constructor
+X& operator=(const X&); // copy assignment: clean up target and copy
+X& operator=(X&&); // move assignment: clean up target and move
+˜X(); // destructor: clean up
+// ...
+};
+
+Xác định Tình huống Sử dụng Hàm thành viên
+• Hàm Sao chép và Di chuyển: Đối tượng được sao chép hoặc di chuyển khi
+• Được gán sang đối tượng khác
+• Được sử dụng như đối tượng khởi tạo đối tượng khác
+• Là tham số của hàm
+• Là giá trị trả về của hàm
+• Xử lý ngoại lệ
+• Constructor: được dùng trong 
+• Thủ tục khởi tạo đối tượng
+• Khởi tạo đối tượng tạm thời 
+• Cài đặt các phép chuyển kiểu 
+
+Constructors và Destructors
+• Constructor và destructor = tạo lập và dọn dẹp đối tượng
+struct Tracer {
+string mess;
+Tracer(const string& s) :mess{s} { clog << mess; }
+˜Tracer() {clog << "˜" << mess; }
+};
+void f(const vector<int>& v)
+{
+Tracer tr {"in f()\n"};
+for (auto x : v) {
+Tracer tr {string{"v loop "}+to<string>(x)+'\n'};
+// ...
+}
+}
+Lời gọi 
+f({2,3,5});
+Được thực hiện như sau
+in_f()
+v loop 2
+˜v loop 2
+v loop 3
+˜v loop 3
+v loop 5
+˜v loop 5
+˜in_f()
+
+Constructors
+• Constructor là hàm thành viên có cùng tên với lớp
+class Vector {
+public:
+Vector(int s);
+// ...
+};
+• Có thể nhận các đối số truyền vào
+• Không khai báo kiểu trả về
+struct S {
+S(); // fine
+void S(int); // error: no type can be specified for a constructor
+int S; // error: the class name must denote a constructor
+enum S { foo, bar }; // error: the class name must denote a constructor
+};
+
+Khởi tạo Đối tượng Bằng các Bất biến
+• Xác lập các điều kiện bất biến khi tạo đối tượng
+• Tạo đối tượng nếu thỏa mãn các điều kiện
+• Ngược lại, xử lý ngoại lệ:
+• Không tạo đối tượng
+• Không được yêu cầu tài nguyên, gồm:
+• Bộ nhớ
+• Cơ chế khóa
+• Bộ điều khiển tập tin
+• Bộ điều khiển luồng
+• v.v.
+class Vector {
+public:
+Vector(int s);
+// ...
+private:
+double∗ elem; // elem points to an array of sz doubles
+int sz; // sz is non-negative
+};
+Vector::Vector(int s)
+{
+if (s<0) throw Bad_size{s};
+sz = s;
+elem = new double[s];
+}
+
+Tại sao phải Xác định Điều kiện Bất biến?
+• Tập trung thiết kế lớp
+• Phân biệt và làm rõ hành vi của lớp
+• Đơn giản hóa định nghĩa hàm thành viên của lớp
+• Làm rõ cách quản lý tài nguyên của lớp
+• Đơn giản hóa tài liệu mô tả lớp
+
+Destructors
+• Ngược với constructor, desctructor chịu trách nhiệm “dọn dẹp” sạch sẽ các tài nguyên đã được cấp để khởi tạo đối tượng và tồn tại trong quá trình sử dụng đối tượng.
+• Khai báo: ~<tên lớp>
+• Destructor không sử dụng đối số
+• Một lớp có thể chỉ cần một destructor
+• Được gọi ngầm định khi biến đối tượng nằm ra ngoài phạm vi sử dụng, hoặc một đối tượng bị gọi xóa đi
+
+Destructors
+• Khai báo
+class Vector {
+public:
+Vector(int s) :elem{new double[s]}, sz{s} { }; // constructor: acquire memory
+˜Vector() { delete[] elem; } // destructor: release memory
+// ...
+private:
+double∗ elem; // elem points to an array of sz doubles
+int sz; // sz is non-negative
+};
+• Sử dụng
+Vector∗ f(int s)
+{
+Vector v1(s); // Vector v1 bị hủy ngay khi kết thúc f()
+// ...
+return new Vector(s+s);
+}
+void g(int ss)
+{
+Vector∗ p = f(ss);
+// ...
+delete p;
+}
+
+Destructor xử lý ngoại lệ
+• Ngoại lệ cần được xử lý bằng cách gọi destructor phù hợp để dọn dẹp các tài nguyên
+• Kiểu dữ liệu không khai báo destructor được hiểu ngầm là có một destructor không làm gì cả
+• Nếu khai báo tường minh destructor cho lớp, phải đảm bảo đối tượng của lớp có thể được sao chép hoặc di chuyển
+
+Cons./Destructor Cơ sở và Cons./Destructor Thành viên
+• Trong kiến trúc lớp và lớp thành viên
+• Constructor tạo đối tượng lớp theo trình tự từ dưới lên:
+1. Constructor gọi các contructors của lớp cơ sở
+2. Constructor tiếp tục gọi các constructor thành viên
+3. Contructor thực thi các lệnh nội hàm của mình
+• Destructor hủy đối tượng lớp từ trên xuống:
+1. Destructor thực thi các lệnh nội hàm của mình
+2. Destructor gọi các destructor thành viên
+3. Destructor gọi các destructor của lớp cơ sở
+• Đảm bảo nguyên tắc: chỉ được sử dụng khi đã khởi tạo đầy đủ và trước khi các tài nguyên bị hủy.
+
+Constructor mặc định
+• Constructor mặc định sẽ được trình biên dịch sinh ra trong trường hợp cần đến constructor mà class không khai báo tường minh constructor của mình
+• Ví dụ:
+struct S1 {
+string s;
+};
+S1 x; // OK: x.s is initialized to ""
+struct X { X(int); };
+struct S2 {
+X x;
+};
+S2 x1; // error:
+S2 x2 {1}; // OK: x2.x is initialized with 1
+
+Lời gọi đến Constructor và Destructor
+• Destructor được gọi ngầm định khi thoát khỏi một phạm vi truy xuất đối tượng, hoặc thực hiện xóa đối tượng bằng lệnh delete.
+• Nếu constructor tạo đối tượng với yêu cầu tạo mới tài nguyên (new), ta sẽ cần lời gọi tường minh tới destructor
+void C::push_back(const X& a)
+{
+// ...
+new(p) X{a}; // copy construct an X with the value a in address p
+// ...
+}
+void C::pop_back()
+{
+// ...
+p−>˜X(); // destroy the X in address p
+}
+
+Lời gọi đến Constructor và Destructor
+class Nonlocal {
+public:
+// ...
+void destroy() { this−>˜Nonlocal(); } // explicit destruction
+private:
+// ...
+˜Nonlocal(); // don’t destroy implicitly
+};
+void user()
+{
+Nonlocal x; // error: cannot destroy a Nonlocal
+X∗ p = new Nonlocal; // OK
+// ...
+delete p; // error: cannot destroy a Nonlocal
+p.destroy(); // OK
+}
+
+vitual Destructor 
+• Destructor có thể được khai báo là virtual, áp dụng khi lớp sử dụng hàm thành viên cũng được khai báo virtual 
+• Khai báo virtual destructor trong giao diện của lớp để thực hiện xóa (delete) đối tượng qua giao diện này
+class Shape {
+public:
+// ...
+virtual void draw() = 0;
+virtual ˜Shape();
+};
+class Circle {
+public:
+// ...
+void draw();
+˜Circle(); // overrides ˜Shape()
+// ...
+};
+void user(Shape∗ p)
+{
+p−>draw(); // invoke the appropriate draw()
+// ...
+delete p; // invoke the appropriate destructor
+};
+
+Khởi tạo Đối tượng KHÔNG dùng Constructor
+• Với các kiểu tích hợp, khởi tạo với giá trị cụ thể trong kiểu. Ví dụ:
+int a {1};
+char∗ p {nullptr};
+
+Khởi tạo Đối tượng KHÔNG dùng Constructor
+• Với các lớp không khai báo constructor, dùng
+• Khởi tạo theo thành viên
+• Khởi tạo qua sao chép
+• Khởi tạo mặc định nếu không có hàm khởi tạo, hoặc hàm khởi tạo trống
+• {} = khởi tạo các thành viên với {}
+• Ví dụ: Work none {};
+none được khởi tạo {{}, {}, {}} và có giá trị {“”, “”, 0}
+struct Work {
+string author;
+string name;
+int year;
+};
+Work s9 { "Beethoven",
+"Symphony No. 9 in D minor, Op. 125; Choral",
+1824
+}; // memberwise initialization
+Work currently_playing { s9 }; // copy initialization
+Work none {}; // default initialization
+
+Khởi tạo Đối tượng KHÔNG dùng Constructor
+• alpha có giá trị khởi tạo {“”, “”, 0} 
+• beta có giá trị khởi tạo {“”, “”, unknow} 
+• Đối với biến cục bộ hoặc đối tượng được cấp phát tự do, khởi tạo mặc định chỉ áp dụng cho thành viên của kiểu lớp, nhưng thành viên của kiểu tích hợp lại không được thực hiện khởi tạo
+Work alpha;
+void f()
+{
+Work beta;
+// ...
+}
+
+Khởi tạo Đối tượng KHÔNG dùng Constructor
+• Để đảm bảo việc khởi tạo đầy đủ, rõ ràng, dùng cách khởi tạo tường minh. 
+• Ví dụ: dùng {} 
+struct Buf {
+int count;
+char buf[16∗1024];
+};
+Buf buf0; // statically allocated, so initialized by default
+void f()
+{
+Buf buf1; // leave elements uninitialized
+Buf buf2 {}; // I really want to zero out those elements
+int∗ p1 = new int; // *p1 is uninitialized
+int∗ p2 = new int{}; // *p2 == 0
+int∗ p3 = new int{7};// *p3 == 7
+// ...
+}
+
+Khởi tạo Đối tượng bằng Constructors
+• Phải khởi tạo đối tượng bằng lời gọi đến hàm constructor phù hợp
+struct X {
+X(int);
+};
+X x0; // error: no initializer
+X x1 {}; // error: empty initializer
+X x2 {2}; // OK
+X x3 {"two"}; // error: wrong initializer type
+X x4 {1,2}; // error: wrong number of initializers
+X x5 {x4}; // OK: a copy constructor is implicitly defined
+
+Khởi tạo Đối tượng bằng Constructors với {}
+• Constructor mặc định sẽ không có tác dụng nếu đã khai báo constructor với các đối số
+• Copy constructor được duy trì để đảm bảo các đối tượng có thể được sao chép
+• Nên sử dụng {} để tường minh việc khởi tạo.
+struct Y : X {
+X m {0}; // provide default initializer for member m
+Y(int a) :X{a}, m{a} { }; // initialize base and member
+Y() : X{0} { }; // initialize base and member
+};
+X g {1}; // initialize global variable
+void f(int a)
+{
+X def {}; // error: no default value for X
+Y de2 {}; // OK: use default constructor
+X∗ p {nullptr};
+X var {2}; // initialize local variable
+p = new X{4}; // initialize object on free store
+X a[] {1,2,3}; // initialize array elements
+vector<X> v {1,2,3,4}; // initialize vector elements
+}
+
+Khởi tạo Đối tượng bằng Constructors ghi đè
+• Dùng với khai báo constructor ghi đè (overload)
+struct S {
+S(const char∗);
+S(double∗);
+};
+S s1 {"Napier"}; // S::S(const char*)
+S s2 {new double{1.0}}; // S::S(double*);
+S s3 {nullptr}; // ambiguous: S::S(const char*) or S::S(double*)?
+
+Khởi tạo Đối tượng bằng Constructors có đối số
+• Gọi tường minh constructor với đối số của nó
+struct S1 {
+int a,b; // no constructor
+};
+struct S2 {
+int a,b;
+S2(int a = 0, int b = 0) : a(aa), b(bb) {} // constructor
+};
+S1 x11(1,2); // error: no constructor
+S1 x12 {1,2}; // OK: memberwise initialization
+S1 x13(1); // error: no constructor
+S1 x14 {1}; // OK: x14.b becomes 0
+S2 x21(1,2); // OK: use constructor
+S2 x22 {1,2}; // OK: use constructor
+S2 x23(1); // OK: use constructor and one default argument
+S2 x24 {1}; // OK: use constructor and one default argument
+
+Khởi tạo Đối tượng bằng Constructors có đối số
+Chú ý phân biệt khi 
+• Khởi tạo đối tượng bằng danh sách các phần tử với
+• Khởi tạo đối tượng bằng danh sách các đối số trong constructor
+vector<int> v1 {77}; // one element with the value 77
+vector<int> v2(77); // 77 elements with the default value 0
+
+Ví dụ khác
+vector<string> v1 {77}; // 77 elements with the default value ""
+// (vector<string>(std::initializer_list<string>) doesn’t accept {77})
+vector<string> v2(77); // 77 elements with the default value ""
+vector<string> v3 {"Booh!"}; // one element with the value "Booh!"
+vector<string> v4("Booh!"); // error: no constructor takes a string argument
+vector<int∗> v5 {100,0}; // 100 int*s initialized to nullptr (100 is not an int*)
+vector<int∗> v6 {0,0}; // 2 int*s initialized to nullptr
+vector<int∗> v7(0,0); // empty vector (v7.size()==0)
+vector<int∗> v8; // empty vector (v7.size()==0)
+
+Constructor mặc định
+• Là constructor không có đối số
+class Vector {
+public:
+Vector(); // default constructor: no elements
+// ...
+};
+• Cách dùng
+Vector v1; // OK
+Vector v2 {}; // OK
+
+Constructor mặc định
+• Constructor có đối số lấy giá trị mặc định
+class String {
+public:
+String(const char∗ p = ""); // default constructor: empty string
+// ...
+};
+• Cách dùng
+String s1; // OK
+String s2 {}; // OK
+
+Constructor mặc định cho kiểu Dữ liệu Tích hợp
+• Các kiểu dữ liệu tích hợp có sẵn copy constructor và default constructor
+• Giá trị khởi tạo của kiểu dữ liệu tích hợp
+• 0 cho các kiểu số nguyên
+• 0.0 cho các kiểu số dấu chấm động
+• nullptr cho con trỏ
+void f()
+{
+int a0; // uninitialized
+int a1(); // function declaration (intended?)
+int a {}; // a becomes 0
+double d {}; // d becomes 0.0
+char∗ p {}; // p becomes nullptr
+int∗ p1 = new int; // uninitialized int
+int∗ p2 = new int{}; // the int is initialized to 0
+}
+
+Constructor cho thành viên kiểu tham chiếu và const
+• Các tham chiếu vào const phải được khởi tạo từ đầu
+int glob {9};
+struct X {
+const int a1 {7}; // OK
+const int a2; // error: requires a user-defined constructor
+const int& r {9}; // OK
+int& r1 {glob}; // OK
+int& r2; // error: requires a user-defined constructor
+};
+X x; // error: no default constructor for X
+
+Khởi tạo Mảng, vector, các kiểu container
+struct S1 { S1(); }; // has default constructor
+struct S2 { S2(string); }; // no default constructor
+S1 a1[10]; // OK: 10 default elements
+S2 a2[10]; // error: cannot initialize elements
+S2 a3[] { "alpha", "beta" }; // OK: two elements: S2{"alpha"}, S2{"beta"}
+vector<S1> v1(10); // OK: 10 default elements
+vector<S2> v2(10); // error: cannot initialize elements
+vector<S2> v3 { "alpha", "beta" }; // OK: two elements: S2{"alpha"}, S2{"beta"}
+vector<S2> v2(10,""); // OK: 10 elements each initialized to S2{""}
+vector<S2> v4; // OK: no elements
+
+Constructor với Danh sách các bộ Khởi tạo
+• Constructor nhận một đối số kiểu std::initializer_list 
+• Khởi tạo các đối tượng bằng một danh sách {}-list
+• Các kiểu container chuẩn (vertor, map) có sẵn các constructor kiểu này
+vector<double> v = { 1, 2, 3.456, 99.99 };
+list<pair<string,string>> languages = {
+{"Nygaard","Simula"}, {"Richards","BCPL"}, {"Ritchie","C"}
+};
+map<vector<string>,vector<int>> years = {
+{ {"Maurice","Vincent", "Wilkes"},{1913, 1945, 1951, 1967, 2000} },
+{ {"Martin", "Richards"} {1982, 2003, 2007} },
+{ {"David", "John", "Wheeler"}, {1927, 1947, 1951, 2004} }
+};
+
+Constructor với Danh sách các bộ Khởi tạo
+• Đối số kiểu std::initializer<T> 
+• Danh sách bộ khởi tạo phải đồng nhất
+• Các phần tử của danh sách phải thuộc cùng kiểu, hoặc
+• Có thể được chuyển kiểu sang T
+• Ví dụ
+void f(initializer_list<int>);
+f({1,2});
+f({23,345,4567,56789});
+f({}); // the empty list
+f{1,2}; // error: function call () missing
+years.insert({{"Bjarne","Stroustrup"},{1950, 1975, 1985}});
+
+Luật Ưu tiên Chọn Constructor
+• Chọn contructor có danh sách đối số tương hợp với giá trị tham số truyền vào lời gọi constructor
+• Constructor mặc định và constructor với danh sách bộ khởi tạo được ưu tiên
+• Nếu có cả constructor mặc định và constructor với danh sách bộ khởi tạo, ưu tiên constructor mặc định
+• Nếu có constructor với danh sách bộ khởi tạo và constructor “thường”, ưu tiên chọn constructor với danh sách bộ khởi tạo
+
+Luật Ưu tiên Chọn Constructor
+• Ví dụ:
+struct X {
+X(initializer_list<int>);
+X();
+X(int);
+};
+X x0 {}; // empty list: default constructor or initializer-list constructor? (the default constructor)
+X x1 {1}; // one integer: an int argument or a list of one element? (the initializer-list constructor)
+
+Luật Ưu tiên Chọn Constructor
+• Ví dụ: std::vector
+vector<int> v1 {1}; // one element
+vector<int> v2 {1,2}; // two elements
+vector<int> v3 {1,2,3}; // three elements
+vector<string> vs1 {"one"};
+vector<string> vs2 {"one", "two"};
+vector<string> vs3 {"one", "two", "three"};
+
+Sử dụng initializer_list 
+#include <initializer_list>
+Hoặc
+#include <vector>
+#include <map>
+
+Sử dụng initializer_list 
+• Đối số kiểu initializer_list<T>
+• là một chuỗi, được truy cập bằng các hàm thành viên begin(), end() và size()
+• Được truyền vào hàm bằng giá trị
+• Ví dụ: Duyệt phần tử của biến kiểu initializer_list<T> 
+void f(initializer_list<int> args)
+{
+for (int i = 0; i!=args.size(); ++i)
+cout << args.begin()[i] << "\n";
+}
+
+Sử dụng initializer_list 
+Cách duyệt khác:
+void f(initializer_list<int> args)
+{
+for (auto p=args.begin(); p!=args.end(); ++p)
+cout << ∗p << "\n";
+}
+hoặc
+void f(initializer_list<int> args)
+{
+for (auto x : args)
+cout << x << "\n";
+}
+
+Sử dụng initializer_list 
+• Các phần tử của đối số kiểu initializer_list<T> là bất biến.
+int f(std::initializer_list<int> x, int val)
+{
+∗x.begin() = val; // error: attempt to change the value of an initializer-list element
+return ∗x.begin(); // OK
+}
+void g()
+{
+for (int i=0; i!=10; ++i)
+cout << f({1,2,3},i) << '\n';
+}
+
+Khởi tạo Trực tiếp và Khởi tạo bằng Sao chép
+• Dùng toán tử khởi tạo {} 
+• Áp dụng cho cả container và các phần tử của container
+• Xét ví dụ với kiểu vector<vector<double>> 
+vector<vector<double>> vs = {
+{10,11,12,13,14}, // OK: vector of five elements
+{10}, // OK: vector of one element
+10, // error: vector<double>(int) is explicit
+vector<double>{10,11,12,13}, // OK: vector of five elements
+vector<double>{10}, // OK: vector of one element with value 10.0
+vector<double>(10), // OK: vector of 10 elements with value 0.0
+};
+
+Khởi tạo Trực tiếp và Khởi tạo bằng Sao chép
+• Một container có thể có cả constructor tường minh hoặc không tường minh
+• Ví dụ:
+• std::vector<int>(int) là tường minh
+• std::vector<int>(initializer_list<int>) không tường minh
+vector<double> v1(7); // OK: v1 has 7 elements; note: uses () rather than {}
+vector<double> v2 = 9; // error: no conversion from int to vector
+void f(const vector<double>&);
+void g()
+{
+v1 = 9; // error: no conversion from int to vector
+f(9); // error: no conversion from int to vector
+}
+
+Khởi tạo Trực tiếp và Khởi tạo bằng Sao chép
+• Trong ví dụ trước, thay () bằng {} sẽ là cách sử dụng đúng
+vector<double> v1 {7}; // OK: v1 has one element (with the value 7)
+vector<double> v2 = {9}; // OK: v2 has one element (with the value 9)
+void f(const vector<double>&);
+void g()
+{
+v1 = {9}; // OK: v1 now has one element (with the value 9)
+f({9}); // OK: f is called with the list {9}
+}
+• Chú ý kết quả
+
+Khởi tạo Thành viên và Khởi tạo Lớp Cơ sở
+
+Khởi tạo Thành viên
+Ví dụ: lớp Club để quản lý thông tin câu lạc bộ (CLB):
+• name: tên CLB
+• founded: ngày thành lập CLB
+• members: danh sách thành viên CLB
+• officers: danh sách nhân viên CLB
+class Club {
+string name;
+vector<string> members;
+vector<string> officers;
+Date founded;
+// ...
+Club(const string& n, Date fd);
+};
+
+Khởi tạo Thành viên
+class Club {
+string name;
+vector<string> members;
+vector<string> officers;
+Date founded;
+// ...
+Club(const string& n, Date fd);
+};
+• Các đối số cho hàm tạo của thành viên được chỉ định trong danh sách khởi tạo thành viên trong định nghĩa hàm tạo của lớp chứa. 
+Club::Club(const string& n, Date fd)
+: name{n}, members{}, officers{}, founded{fd}
+{
+// ...
+}
+
+Trình tự Khởi tạo Thành viên
+class Club {
+string name;
+vector<string> members;
+vector<string> officers;
+Date founded;
+// ...
+Club(const string& n, Date fd);
+};
+• Constructor của từng thành viên được gọi thực thi trước, rồi mới đến các lệnh trong constructor của lớp chứa
+• Các constructors được gọi theo thứ tự khai báo của thành viên trong lớp
+• Chú ý thứ tự khai báo thành viên và thứ tự khai báo bộ khởi tạo
+• Destructors được gọi theo thứ tự ngược với lời gọi các constructors, sau khi thực thi các lệnh trong destructor của lớp chứa
+Club::Club(const string& n, Date fd)
+: name{n}, members{}, officers{}, founded{fd}
+{
+// ...
+}
+
+Khởi tạo Thành viên 
+class Club {
+string name;
+vector<string> members;
+vector<string> officers;
+Date founded;
+// ...
+Club(const string& n, Date fd);
+};
+• Nếu constructor của thành viên không cần đối số, có thể không cần khai báo tường minh constructors của thành viên này trong danh sách bộ khởi tạo. 
+Club::Club(const string& n, Date fd)
+: name{n}, founded{fd}
+{
+// ...
+}
+• Club::members và Club::officers được khởi tạo bằng vector không có phần tử
+• Khởi tạo các thành viên nên thực hiện tường minh, rõ ràng
+
+Phạm vi Khởi tạo Thành viên
+• Constructor thực hiện khởi tạo các thành viên và cơ sở của lớp chứa nó
+• Không can thiệp vào việc khởi tạo của lớp “sâu” hơn
+struct B { B(int); /* ... */};
+struct BB : B { /* ... */ };
+struct BBB : BB {
+BBB(int i) : B(i) { }; // error: trying to initialize base’s base
+// ...
+};
+
+Khởi tạo Thành viên và Gán Thành viên
+• Ý nghĩa của việc khởi tạo thành viên và gán thành viên là khác nhau
+• Phải khởi tạo các thành viên “tham chiếu” và thành viên const 
+• Ví dụ:
+class X {
+const int i;
+Club cl;
+Club& rc;
+// ...
+X(int ii, const string& n, Date d, Club& c) : i{ii}, cl{n,d}, rc{c} { }
+};
+
+Khởi tạo Thành viên và Gán Thành viên
+• Cứ nên khai báo tường minh việc khởi tạo khi cần thiết
+• Ví dụ:
+class Person {
+string name;
+string address;
+// ...
+Person(const Person&);
+Person(const string& n, const string& a);
+};
+Person::Person(const string& n, const string& a)
+: name{n}
+{
+address = a;
+}
+name được khởi tạo với bản sao của n 
+address được khởi tạo bằng một chuỗi ký tự rỗng, sau đó mới được gán bằng giá trị của a 
+
+Khởi tạo Lớp Cơ sở
+• Các lớp cơ sở của lớp kế thừa được khởi tạo tương tự như các thành viên không phải dữ liệu
+• Nếu lớp cơ sở cần bộ khởi tạo, hàm khởi tạo cơ sở này phải được cung cấp trong constructor của lớp chứa
+• Gọi tường minh việc khởi tạo, nếu cần thiết
+
+Khởi tạo Lớp Cơ sở
+• Ví dụ
+class B1 { B1(); }; // has default constructor
+class B2 { B2(int); } // no default constructor
+struct D1 : B1, B2 {
+D1(int i) :B1{}, B2{i} {}
+};
+struct D2 : B1, B2 {
+D2(int i) :B2{i} {} // B1{} is used implicitly
+};
+struct D1 : B1, B2 {
+D1(int i) { } // error: B2 requires an int initializer
+};
+
+Constructor Ủy quyền
+• Tình huống: Hai constructors thực hiện cùng một công việc
+class X {
+int a;
+validate(int x) { if (0<x && x<=max) a=x; else throw Bad_X(x); }
+public:
+X(int x) { validate(x); }
+X() { validate(42); }
+X(string s) { int x = to<int>(s); validate(x); }
+// ...
+};
+
+Constructor Ủy quyền
+• Giao hẳn việc ấy cho một constructor, và tổ chức cách gọi phù hợp – Constructor ủy quyền (delegating constructor)
+class X {
+int a;
+public:
+X(int x) { if (0<x && x<=max) a=x; else throw Bad_X(x); }
+X() :X{42} { }
+X(string s) :X{to<int>(s)} { }
+// ...
+};
+
+Constructor Ủy quyền
+• Constructor ủy quyền và khởi tạo tường minh không thể được gọi thực hiện cùng nhau
+class X {
+int a;
+public:
+X(int x) { if (0<x && x<=max) a=x; else throw Bad_X(x); }
+X() :X{42}, a{56} { } // error
+// ...
+};
+
+Constructor Ủy quyền – Chú ý lời gọi
+• Ủy quyền bằng cách gọi một constructor khác trong danh sách bộ khởi tạo không giống với việc gọi constructor ấy từ trong thân hàm constructor
+class X {
+int a;
+public:
+X(int x) { if (0<x && x<=max) a=x; else throw Bad_X(x); }
+X() { X{42}; } // likely error
+// ...
+};
+• Đối tượng chỉ được tạo ra nếu constructor, và constructor ủy quyền hoàn thành
+• Destructor sẽ không được gọi nếu đối tượng chưa được khởi tạo thành công
+
+Các bộ khởi tạo nội bộ
+• Khởi tạo cho các thành viên dữ liệu non-static 
+class A {
+public:
+int a {7};
+int b = 77;
+};
+• Chú ý: dùng {} và =, không dùng () 
+
+Các bộ khởi tạo nội bộ
+• Dùng một constructor như là một bộ khởi tạo nội bộ mặc định
+class A {
+public:
+int a;
+int b;
+A() : a{7}, b{77} {}
+};
+
+Các bộ khởi tạo nội bộ
+• Một ví dụ rối rắm
+class A {
+public:
+A() :a{7}, b{5}, algorithm{"MD5"}, state{"Constructor run"} {}
+A(int a_val) :a{a_val}, b{5}, algorithm{"MD5"}, state{"Constructor run"} {}
+A(D d) :a{7}, b{g(d)}, algorithm{"MD5"}, state{"Constructor run"} {}
+// ...
+private:
+int a, b;
+HashFunction algorithm; // cryptographic hash to be applied to all As
+string state; // string indicating state in object life cycle
+};
+
+Các bộ khởi tạo nội bộ
+• Bản cải tiến
+class A {
+public:
+A() :a{7}, b{5} {}
+A(int a_val) :a{a_val}, b{5} {}
+A(D d) :a{7}, b{g(d)} {}
+// ...
+private:
+int a, b;
+HashFunction algorithm {"MD5"}; // cryptographic hash to be applied to all As
+string state {"Constructor run"}; // string indicating state in object life cycle
+};
+
+Các bộ khởi tạo nội bộ
+• Nếu một thành viên được khởi tạo bằng cả bộ khởi tạo nội bộ và một constructor, ưu tiên chỉ khởi tạo bằng constructor
+• Bản cải tiến tốt hơn 
+class A {
+public:
+A() {}
+A(int a_val) :a{a_val} {}
+A(D d) :b{g(d)} {}
+// ...
+private:
+int a {7}; // the meaning of 7 for a is ...
+int b {5}; // the meaning of 5 for b is ...
+HashFunction algorithm {"MD5"}; // Cryptographic hash to be applied to all As
+string state {"Constructor run"}; // String indicating state in object lifecycle
+};
+
+Các bộ khởi tạo nội bộ - Phạm vi dùng biến
+int count = 0;
+int count2 = 0;
+int f(int i) { return i+count; }
+struct S {
+int m1 {count2}; // that is, ::count2
+int m2 {f(m1)}; // that is, this->m1+::count; that is, ::count2+::count
+S() { ++count2; } // very odd constructor
+};
+int main()
+{
+S s1; // {0,0}
+++count;
+S s2; // {1,2}
+}
+
+Khởi tạo thành viên static 
+• Định nghĩa giá trị của thành viên static bên ngoài khai báo lớp
+class Node {
+// ...
+static int node_count; // declaration
+};
+int Node::node_count = 0; // definition
+
+Khởi tạo thành viên static 
+• Có thể khởi tạo ngay trong khai báo lớp nếu thành viên static được khai báo const của kiểu giá trị tích phân hoặc kiểu liệt kê, hoặc là một biểu thức hằng constexpr, 
+• Bộ khởi tạo phải là một biểu thức hằng 
+class Curious {
+public:
+static const int c1 = 7; // OK
+static int c2 = 11; // error: not const
+const int c3 = 13; // OK, but not static (§17.4.4)
+static const int c4 = sqrt(9); // error: in-class initializer not constant
+static const float c5 = 7.0; // error: in-class not integral (use constexpr rather than const)
+// ...
+};
+
+Sử dụng thành viên Hằng 
+• Tên tượng trưng cho các giá trị hằng số 
+template<class T, int N>
+class Fixed { // fixed-size array
+public:
+static constexpr int max = N;
+// ...
+private:
+T a[max];
+};
+• Có thể dùng kiểu liệt kê enum 
+class X {
+enum { c1 = 7, c2 = 11, c3 = 13, c4 = 17 };
+// ...
+};
+
+Sao chép và Di chuyển
+
+Chuyển giá trị giữa các biến – Định nghĩa
+• Sao chép (copy) : x = y 
+• Kết quả: x và y có cùng giá trị của y trước khi thực hiện gán
+• Chuyển (move): 
+• Kết quả: x có giá trị (trước đó) của y
+y mang trạng thái “đã được chuyển đi”. Sau đó, có thể thay đổi được
+
+Chuyển giá trị giữa các biến – Nguyên tắc xử lý khi viết hàm
+• Xử lý ngoại lệ
+• Phép chuyển không thể gửi một ngoại lệ
+• Phép sao chép có thể gửi ngoại lệ, do yêu cầu phải cấp tài nguyên cho biến
+• Hiệu suất: phép chuyển (thường) hiểu quả hơn phép sao chép
+• Viết hàm chuyển: nên giữ đối tượng nguồn ở trạng thái hợp lệ nhưng không xác định. 
+• Hàm hủy chỉ dọn dẹp đối tượng ở trạng thái hợp lệ.
+
+Sao chép
+Phép sao chép của một lớp X được định nghĩa bởi hai thao tác:
+• Khởi tạo chép - Copy constructor: X(const X&)
+• Tạo ra bản sao của đối tượng và không làm thay đổi đối tượng này
+• Chép qua phép gán – Copy assignment: X& operator=(const X&)
+
+Sao chép – Ví dụ với lớp Matrix - Khai báo
+template<class T>
+class Matrix {
+array<int,2> dim; // two dimensions
+T∗ elem; // pointer to dim[0]*dim[1] elements of type T
+public:
+Matrix(int d1, int d2) :dim{d1,d2}, elem{new T[d1∗d2]} {} // simplified (no error handling)
+int size() const { return dim[0]∗dim[1]; }
+Matrix(const Matrix&); // copy constructor
+Matrix& operator=(const Matrix&); // copy assignment
+Matrix(Matrix&&); // move constructor
+Matrix& operator=(Matrix&&); // move assignment
+˜Matrix() { delete[] elem; }
+// ...
+};
+
+Sao chép – Ví dụ với lớp Matrix - Cài đặt
+template<class T>
+Matrix:: Matrix(const Matrix& m) // copy constructor
+: dim{m.dim},
+elem{new T[m.size()]}
+{
+uninitialized_copy(m.elem,m.elem+m.size(),elem); // copy elements
+}
+template<class T>
+Matrix& Matrix::operator=(const Matrix& m) // copy assignment
+{
+if (dim[0]!=m.dim[0] || dim[1]!=m.dim[1])
+throw runtime_error("bad size in Matrix =");
+copy(m.elem,m.elem+m.size(),elem); // copy elements
+}
+
+Sao chép – Chú ý Khi xử lý Constructor mặc định
+• Khi viết hàm copy, phải thực hiện copy tất cả thành phần cơ sở và các thành viên
+class X {
+string s;
+string s2;
+vector<string> v;
+X(const X&) // copy constructor
+:s{a.s}, v{a.v} // probably sloppy and probably wrong
+{
+}
+// ...
+};
+
+Sao chép các Thành phần Cơ sở
+• Xem lớp cơ sở là một thành viên
+• Để sao chép một đối tượng của lớp được kế thừa, nhớ phải sao chép cả các lớp cơ sở
+struct B1 {
+B1();
+B1(const B1&);
+// ...
+};
+struct B2 {
+B2(int);
+B2(const B2&);
+// ...
+};
+struct D : B1, B2 {
+D(int i) :B1{}, B2{i}, m1{}, m2{2∗i} {}
+D(const D& a) :B1{a}, B2{a}, m1{a.m1}, m2{a.m2} {}
+B1 m1;
+B2 m2;
+};
+D d {1}; // construct with int argument
+D dd {d}; // copy construct
+
+Sao chép - Quy tắc thực hiện
+Phép sao chép phải thỏa mãn:
+1. Được khai báo kiểu đúng
+2. Có ngữ nghĩa “sao chép” đúng
+• Tính tương đương: Sau khi thực hiện phép gán x=y, 
+• x và y có cùng giá trị
+• Nếu tồn tại phép so sánh == thì x==y và f(x)==f(y) với f() bất kỳ phụ thuộc vào giá trị của x và y
+• Tính độc lập: Sau khi thực hiện phép gán x=y, 
+• Các phép toán trên x không nên ngầm thay đổi giá trị của y, i.e., f(x) không làm thay đổi giá trị của y miễn là f(x) không tham chiếu đến y
+• Ví dụ: int và vector là hai lớp có phép sao chép như trên. 
+
+Sao chép - Quy tắc thực hiện
+Chú ý khi thực hiện sao chép đối tượng có chứa các con trỏ
+• Phép sao chép mặc định thực hiện chép thành viên con trỏ, nhưng không chép đối tượng mà con trỏ trỏ đến. 
+struct S {
+int∗ p; // a pointer
+};
+S x {new int{0}};
+void f()
+{
+S y {x}; // “copy” x
+∗y.p = 1; // change y; affects x
+∗x.p = 2; // change x; affects y
+delete y.p; // affects x and y
+y.p = new int{3}; // OK: change y; does not affect x
+∗x.p = 4; // oops: write to deallocated memory
+}
+
+Sao chép – Sao chép “nông” vs. “sâu”
+Với sao chép “nông” - shallow copy – hai đối tượng có cùng trạng thái được chia sẻ.
+->Dễ gây lỗi.
+Sao chép “sâu”: sao chép toàn bộ trạng thái của một đối tượng.
+->nên thay thế bằng toán tử “di chuyển”
+struct S {
+int∗ p; // a pointer
+};
+S x {new int{0}};
+void f()
+{
+S y {x}; // “copy” x
+∗y.p = 1; // change y; affects x
+∗x.p = 2; // change x; affects y
+delete y.p; // affects x and y
+y.p = new int{3}; // OK: change y; does not affect x
+∗x.p = 4; // oops: write to deallocated memory
+}
+
+Sao chép - Cắt lát (Slicing)
+Con trỏ trỏ đến lớp dẫn xuất sẽ ngầm chuyển đổi thành con trỏ trỏ đến lớp cơ sở được khai báo public của nó. 
+->Cắt lát
+Giải pháp:
+1. Cấm thực hiện sao chép lớp cơ sở bằng cách delete phương thức sao chép
+2. Ngăn ngừa chuyển đổi một con trỏ trỏ tới lớp dẫn xuất thành con trỏ trỏ tới lớp cơ sở bằng cách khai báo private hoặc protected cho lớp cơ sở
+struct Base {
+int b;
+Base(const Base&);
+// ...
+};
+struct Derived : Base {
+int d;
+Derived(const Derived&);
+// ...
+};
+void naive(Base∗ p)
+{
+B b2 = ∗p; // may slice: invokes Base::Base(const Base&)
+// ...
+}
+void user()
+{
+Derived d;
+naive(&d);
+Base bb = d; // slices: invokes Base::Base(const Base&), not Derived::Derived(const Derived&)
+// ...
+}
+
+Di chuyển
+Phép chuyển của một lớp có thể thực hiện qua hai thao tác:
+• Khởi tạo chuyển – Move constructor
+• Chuyển bằng phép gán - Move assignment
+
+Di chuyển – Ví dụ
+template<class T>
+class Matrix {
+std::array<int,2> dim;
+T∗ elem; // pointer to sz elements of type T
+Matrix(int d1, int d2) :dim{d1,d2}, elem{new T[d1∗d2]} {}
+int size() const { return dim[0]∗dim[1]; }
+Matrix(const Matrix&); // copy constructor
+Matrix(Matrix&&); // move constructor
+Matrix& operator=(const Matrix&); // copy assignment
+Matrix& operator=(Matrix&&); // move assignment
+˜Matrix(); // destructor
+// ...
+};
+
+Di chuyển – Khởi tạo Chuyển
+template<class T>
+Matrix<T>::Matrix(Matrix&& a) // move constructor
+:dim{a.dim}, elem{a.elem} // grab a’s representation
+{
+a.dim = {0,0}; // clear a’s representation
+a.elem = nullptr;
+}
+
+Di chuyển – Chuyển bằng cách Gán
+template<class T>
+Matrix<T>& Matrix<T>::operator=(Matrix&& a) // move assignment
+{
+swap(dim,a.dim); // swap representations
+swap(elem,a.elem);
+return ∗this;
+}
+
+Di chuyển – swap() 
+template<class T>
+void swap(T& a, T& b) // "perfect swap" (almost)
+{
+T tmp = std::move(a);
+a = std::move(b);
+b = std::move(tmp);
+}
+template<class T>
+void swap(T& a, T& b)
+{
+const T tmp = a; // put a copy of a into tmp
+a = b; // put a copy of b into a
+b = tmp; // put a copy of tmp into b
+};
+void f(string& s1, string& s2,
+vector<string>& vs1, vector<string>& vs2,
+Matrix& m1, Matrix& m2)
+{
+swap(s1,s2);
+swap(vs1.vs2);
+swap(m1,m2);
+}
+• swap() nào hiệu quả hơn?
+
+Ví dụ: Phép + ma trận
+Matrix operator+(const Matrix& a, const Matrix& b)
+// res[i][j] = a[i][j]+b[i][j] for each i and j
+{
+if (a.dim[0]!=b.dim[0] || a.dim[1]!=b.dim[1])
+throw std::runtime_error("unequal Matrix sizes in +");
+Matrix res{a.dim[0],a.dim[1]};
+constexpr auto n = a.size();
+for (int i = 0; i!=n; ++i)
+res.elem[i] = a.elem[i]+b.elem[i];
+return res;
+}
+
+Phép toán giữa các đối tượng Lớp
+• Lớp có sẵn các cài đặc mặc định (do trình biên dịch) sau:
+• Khởi tạo mặc định: X()
+• Khởi tạo sao chép: X(const X&)
+• Phép gán bằng sao chép: X& operator=(const X&)
+• Khởi tạo chuyển: X(X&&)
+• Phép gán bằng chuyển: X& operator=(X&&)
+• Hủy: ~X()
+• Nếu một constructor được khai báo tường minh, constructor mặc định sẽ không được sinh ra
+• Nếu phép sao chép, phép chuyển, hoặc destructor được khai báo tường minh, các thành phần tương ứng sẽ không được trình biên dịch sinh ra 
+
+Mặc định tường minh
+class gslice {
+valarray<size_t> size;
+valarray<size_t> stride;
+valarray<size_t> d1;
+public:
+gslice() = default;
+˜gslice() = default;
+gslice(const gslice&) = default;
+gslice(gslice&&) = default;
+gslice& operator=(const gslice&) = default;
+gslice& operator=(gslice&&) = default;
+// ...
+};
+
+Các phép toán tường minh
+• Ví dụ:
+struct S {
+string a;
+int b;
+};
+S f(S arg)
+{
+S s0 {}; // default construction: {"",0}
+S s1 {s0}; // copy construction
+s1 = arg; // copy assignment
+return s1; // move construction
+}
+```
